@@ -9,9 +9,10 @@ void TheGame::init()
 
 void TheGame::start_new()
 {
+    board->draw();
     board[0].init();
     board[1].init();
-    board[0].start(random(PIECES_KINDS)); // TODO: initialization of the piece in the center of the screen
+    board[0].start(random(PIECES_KINDS), random(ROTATION)); // TODO: initialization of the piece in the center of the screen
     char key = 0;
     int dir;
     do{
@@ -34,7 +35,7 @@ void TheGame::start_new()
 
 void TheGame::menu(bool Paused)
 {
-    char act = 0 ;
+    char act = 0;
     cout << "Tetris - Main Menu:\n" << "(1) Start a new game" << endl;
     if(Paused)
         cout << "(2) Continue a paused game " << endl ;
@@ -48,8 +49,12 @@ void TheGame::menu(bool Paused)
         case '2':
             if (Paused)             // continue paused game
                 this->resume();
-            else
+            else{
                 cout << "Wrong input\n";
+                Sleep(1000);
+                clear_screen();
+                menu(false); // TODO:THE GAME ENDS INSTEAD OF WAITING FOR INPUT
+                }
             break;
         case '8':                     // print keys and instructions ( !!! need to add instruction !!! )
             cout << "Each player can move the pieces to the : left / right / down or to rotate the pieces in clockwise direction or counterclockwise direction:\n  game is over if your pieces reach the top of the screen, and you can only remove pieces from the screen by filling all the blank space in a line. "<< endl;
