@@ -5,12 +5,17 @@ void Tetromino::setColor(Color c)
     color = c;
 }
 
-void Tetromino::getTetromino()
+void Tetromino::draw(char *pieces)
 {
-
+    setTextColor(color);
+    for(int i = 0; i < XRANGE; i++)
+        for(int j = 0; j < YRANGE; j++) {
+//            if(pieces[])
+            std::cout << figure << std::endl;
+        }
 }
 
-char tetrominoes[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
+char pieces[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
 {
         // Square
         {
@@ -233,7 +238,7 @@ char tetrominoes[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
         }
 };
 
-int TetrominoesInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
+int tInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
         /* Square */
         {
                 {-2, -3},
@@ -284,3 +289,18 @@ int TetrominoesInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
                 {-2, -2}
         },
 };
+
+int Tetromino::getKindOfBlock(int tPiece, int tRotation, int tX, int tY)
+{
+    return pieces[tPiece][tRotation][tX][tY];
+}
+
+int Tetromino::getXInitPos(int tPiece, int tRotation)
+{
+    return tInitialPosition[tPiece][tRotation][0];
+}
+
+int Tetromino::getYInitPos(int tPiece, int tRotation)
+{
+    return tInitialPosition[tPiece][tRotation][1];
+}
