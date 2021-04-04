@@ -5,17 +5,8 @@ void Tetromino::setColor(Color c)
     color = c;
 }
 
-void Tetromino::draw(char *pieces)
-{
-    setTextColor(color);
-    for(int i = 0; i < XRANGE; i++)
-        for(int j = 0; j < YRANGE; j++) {
-//            if(pieces[])
-            std::cout << figure << std::endl;
-        }
-}
 
-char pieces[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
+char mTetrominoes[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
 {
         // Square
         {
@@ -292,7 +283,7 @@ int tInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
 
 int Tetromino::getKindOfBlock(int tPiece, int tRotation, int tX, int tY)
 {
-    return pieces[tPiece][tRotation][tX][tY];
+    return mTetrominoes[tPiece][tRotation][tX][tY];
 }
 
 int Tetromino::getXInitPos(int tPiece, int tRotation)
@@ -303,4 +294,20 @@ int Tetromino::getXInitPos(int tPiece, int tRotation)
 int Tetromino::getYInitPos(int tPiece, int tRotation)
 {
     return tInitialPosition[tPiece][tRotation][1];
+}
+
+void Tetromino::draw(int piece, int rotation, int boardNum)
+{
+    for(int i = 0, i1 = 0; i < XRANGE; i++)
+    {
+        for (int j = 0, j1 = 0; j < YRANGE; j++)
+        {
+            if(mTetrominoes[piece][rotation][i][j] != 0) {
+                gotoxy(STARTBOARD1 + j1 + boardNum*(STARTBOARD2 - STARTBOARD1), INITIALY + i1);
+                std::cout << figure;
+                j1++;
+            }
+        }
+        i1++;
+    }
 }
