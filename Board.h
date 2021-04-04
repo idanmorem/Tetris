@@ -9,23 +9,18 @@
 #define ROTATE_CLOCKWISE 2
 #define ROTATE_COUNTERCLOCKWISE 3
 #define DROP 4
-#define DOWN 5
 #define PIECE_BLOCKS 5
-#define INITIALX 20
-#define INITIALY 20
-#define XSPACE 20
-
 
 class Board {
     char arrowKeys[5];
     int direction;
     int board[COLS][ROWS];
-
+    Tetromino tetromino;
     enum {POS_FREE, POS_FILLED};
     void deleteLine(int tY);
 public:
     void draw();
-    void start(int tNum);
+    void start(int piece, int rotation);
     void init();
     void setArrowKeys(const char* keys);
     int getDirection(char key);
