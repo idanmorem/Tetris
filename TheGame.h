@@ -3,6 +3,9 @@
 
 #include "Board.h"
 #include "IO.h"
+#include <conio.h>
+#include <stdlib.h>
+
 
 
 class TheGame{
@@ -10,8 +13,11 @@ class TheGame{
     Board board[2];
 public:
     void init();
-    void run();
-    void menu();
+    void start_new();
+    void menu(bool paused);
+    int random(int compare);
+    void exit();
+    void resume();
 };
 
 #endif //TETRIS_THEGAME_H
