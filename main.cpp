@@ -3,8 +3,9 @@
 
 int main()
 {
+    clear_screen();
     TheGame game;
     game.init();
-    game.run();
+
     return 0;
 }
