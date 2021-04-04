@@ -14,17 +14,14 @@
 class Tetromino
 {
     const char figure = (char)254;
-    Color color = BLACK;
-    int direction = 5;
-
+    Color color;
+    int x = 1, y = 1;
 public:
-    void getTetromino();
+    void draw(char *pieces);
     void setColor(Color c);
-    void move();
-
-//    int getKindOfBlock (int pPiece, int pRotation, int pX, int pY);
-//    int getXInitPos (int pPiece, int pRotation);
-//    int getYInitPos (int pPiece, int pRotation);
+    int getKindOfBlock (int tPiece, int tRotation, int tX, int tY);
+    int getXInitPos (int tPiece, int tRotation);
+    int getYInitPos (int tPiece, int tRotation);
 };
 
 
