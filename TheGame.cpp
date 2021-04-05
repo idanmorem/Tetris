@@ -41,7 +41,6 @@ void TheGame::menu(bool Paused)
         cout << "(2) Continue a paused game " << endl ;
     cout << "(8) Present instructions and keys\n" << "(9) EXIT" << endl;
 
-
     act =(char)_getch();
     if(Paused)                                                      // Paused game case -  absorb input until it one of the legal keys : 1, 2, 8, 9
     {
@@ -59,7 +58,6 @@ void TheGame::menu(bool Paused)
             act =(char)_getch();
         }
     }
-
     switch(act) {
         case NEW_GAME:{
             this->start_new();            // initialize new game
