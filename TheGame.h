@@ -15,7 +15,6 @@ public:
     void init();
     void start_new();
     void menu(bool paused);
-    int random(int compare);
     void exit();
     void resume();
 };
