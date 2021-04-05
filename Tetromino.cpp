@@ -229,11 +229,11 @@ char mTetrominoes[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
         }
 };
 
-int tInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
+int mInitPos [PIECES_KINDS][ROTATION][POSITION] = {
         /* Square */
         {
-                {-2, -3},
-                {-2, -3},
+                {-1, -2},
+                {-1, -2},
                 {-2, -3},
                 {-2, -3}
         },
@@ -253,16 +253,16 @@ int tInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
         },
 /* L mirrored */
         {
-                {-2, -3},
-                {-2, -2},
-                {-2, -3},
-                {-2, -3}
+                {-1, -2},
+                {-1, -1},
+                {-1, -2},
+                {-1, -2}
         },
 /* N */
         {
                 {-2, -3},
                 {-2, -3},
-                {-2, -3},
+                {1, -4},
                 {-2, -2}
         },
 /* N mirrored */
@@ -281,33 +281,26 @@ int tInitialPosition [PIECES_KINDS][ROTATION][POSITION] = {
         },
 };
 
-int Tetromino::getKindOfBlock(int tPiece, int tRotation, int tX, int tY)
-{
-    return mTetrominoes[tPiece][tRotation][tX][tY];
-}
-
 int Tetromino::getXInitPos(int tPiece, int tRotation)
 {
-    return tInitialPosition[tPiece][tRotation][0];
+    return mInitPos[tPiece][tRotation][0];
 }
 
 int Tetromino::getYInitPos(int tPiece, int tRotation)
 {
-    return tInitialPosition[tPiece][tRotation][1];
+    return mInitPos[tPiece][tRotation][1];
 }
 
 void Tetromino::draw(int piece, int rotation, int boardNum)
 {
-    for(int i = 0, i1 = 0; i < XRANGE; i++)
+    for(int i = 0; i < YRANGE; i++)
     {
-        for (int j = 0, j1 = 0; j < YRANGE; j++)
+        for (int j = 0; j < XRANGE; j++)
         {
             if(mTetrominoes[piece][rotation][i][j] != 0) {
-                gotoxy(STARTBOARD1 + j1 + boardNum*(STARTBOARD2 - STARTBOARD1), INITIALY + i1);
+                gotoxy(STARTBOARD1 + getXInitPos(piece, rotation) + j + boardNum*(STARTBOARD2-STARTBOARD1), INITIALY + getYInitPos(piece, rotation) + i);
                 std::cout << figure;
-                j1++;
             }
         }
-        i1++;
     }
 }
