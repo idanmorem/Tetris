@@ -7,6 +7,10 @@
 #include <stdlib.h>
 
 
+#define NEW_GAME '1'
+#define CONTINUE_GAME '2'
+#define KEYS_INSTRUCTIONS '8'
+#define EXIT '9'
 
 class TheGame{
     enum {ESC = 27};
@@ -15,6 +19,7 @@ public:
     void init();
     void start_new();
     void menu(bool paused);
+    int random(int compare);
     void exit();
     void resume();
 };
