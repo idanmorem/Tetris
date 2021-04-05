@@ -1,5 +1,6 @@
 #ifndef TETRIS_BOARD_H
 #define TETRIS_BOARD_H
+
 #include "Tetromino.h"
 
 #define COLS 12

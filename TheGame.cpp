@@ -41,23 +41,38 @@ void TheGame::menu(bool Paused)
         cout << "(2) Continue a paused game " << endl ;
     cout << "(8) Present instructions and keys\n" << "(9) EXIT" << endl;
 
-    act = getchar();
+
+    act =(char)_getch();
+    if(Paused)                                                      // Paused game case -  absorb input until it one of the legal keys : 1, 2, 8, 9
+    {
+        while(act != NEW_GAME && act != CONTINUE_GAME && act != KEYS_INSTRUCTIONS && act != EXIT )
+        {
+            cout << "Wrong input\n";
+            act =(char)_getch();
+        }
+    }
+    else                                                            // Not Paused game case - absorb input until it one of the legal keys : 1, 8, 9
+    {
+        while(act != NEW_GAME && act != KEYS_INSTRUCTIONS && act != EXIT)
+        {
+            cout << "Wrong input\n";
+            act =(char)_getch();
+        }
+    }
+
     switch(act) {
-        case '1':
+        case NEW_GAME:{
             this->start_new();            // initialize new game
             break;
-        case '2':
-            if (Paused)             // continue paused game
-                this->resume();
-            else{
-                cout << "Wrong input\n";
-                Sleep(1000);
-                clear_screen();
-                menu(false); // TODO:THE GAME ENDS INSTEAD OF WAITING FOR INPUT
-                }
+        }
+        case CONTINUE_GAME:{
+            this->resume();             // continue paused game
             break;
-        case '8':                     // print keys and instructions ( !!! need to add instruction !!! )
-            cout << "Each player can move the pieces to the : left / right / down or to rotate the pieces in clockwise direction or counterclockwise direction:\n  game is over if your pieces reach the top of the screen, and you can only remove pieces from the screen by filling all the blank space in a line. "<< endl;
+        }
+        case KEYS_INSTRUCTIONS:{                     // print keys and instructions ( !!! need to add instruction !!! )
+            cout
+                    << "Each player can move the pieces to the: left / right / down or to rotate the pieces in clockwise direction or counterclockwise direction:\ngame is over if your pieces reach the top of the screen, and you can only remove pieces from the screen by filling all the blank space in a line. "
+                    << endl;
             cout << "Keys:\n"
                     "                               Left Player                Right Player\n"
                     "LEFT:                            a or A                     j or J\n"
@@ -66,14 +81,12 @@ void TheGame::menu(bool Paused)
                     "ROTATE counterclockwise:         w or W                     i or I (uppercase i)\n"
                     "DROP:                            x or X                     m or M\n" << endl;
             break;
-        case '9':                     // exit game
+        }
+        case EXIT: {                    // exit game
             this->exit();
             break;
-
-        default:                    // in case of wrong input
-            cout << "Wrong input\n";
+        }
     }
-
 }
 
 int TheGame::random(int compare)
