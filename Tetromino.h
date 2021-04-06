@@ -3,8 +3,8 @@
 #include "IO.h"
 #include <iostream>
 
-#define XRANGE 5
-#define YRANGE 5
+#define XRANGE 4
+#define YRANGE 4
 #define PIECES_KINDS 7
 #define ROTATION 4
 #define POSITION 2
