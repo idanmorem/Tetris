@@ -25,6 +25,7 @@ public:
     void setColor(Color c);
     int getXInitPos (int tPiece, int tRotation);
     int getYInitPos (int tPiece, int tRotation);
+    int GetBlockType (int piece, int rotation, int x, int y);
 };
 
 
