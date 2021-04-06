@@ -21,7 +21,7 @@ class Board {
     void deleteLine(int tY);
 public:
     void draw();
-    void start(int piece, int rotation);
+    void start();
     void init();
     void setArrowKeys(const char* keys);
     int getDirection(char key);
@@ -35,6 +35,7 @@ public:
     bool isPossible(int tX, int tY, int piece, int rotation);
     void storePiece(int tX, int tY, int piece, int rotation);
     void deletePossibleLines();
+    int random(int compare);
 };
 
 #endif //TETRIS_BOARD_H
