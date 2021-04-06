@@ -23,9 +23,9 @@ class Tetromino
 public:
     void draw(int piece, int rotation, int boardNum);
     void setColor(Color c);
-    int getKindOfBlock (int tPiece, int tRotation, int tX, int tY);
     int getXInitPos (int tPiece, int tRotation);
     int getYInitPos (int tPiece, int tRotation);
+    int GetBlockType (int piece, int rotation, int x, int y);
 };
 
 

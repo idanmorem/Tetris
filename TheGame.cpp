@@ -12,7 +12,7 @@ void TheGame::start_new()
     board->draw();
     board[0].init();
     board[1].init();
-    board[0].start(random(PIECES_KINDS), random(ROTATION)); // TODO: initialization of the piece in the center of the screen
+    board[0].start(); // TODO: initialization of the piece in the center of the screen
     char key = 0;
     int dir;
     do{
