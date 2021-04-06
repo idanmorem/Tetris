@@ -97,7 +97,7 @@ void Board::draw()
 
 void Board::start()
 {
-    tetromino.draw(random(PIECES_KINDS),random(ROTATION) , 0);
+    tetromino.draw(6,3, 0);
     tetromino.draw(random(PIECES_KINDS), random(ROTATION), 1);
 //    for(int i = 0; i < COLS; i++)
 //        for(int j = 0; j < ROWS; j++)
