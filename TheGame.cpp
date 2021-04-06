@@ -58,8 +58,6 @@ void TheGame::menu(bool Paused)
             act =(char)_getch();
         }
     }
-
-
     switch(act) {
         case NEW_GAME:{
             this->start_new();            // initialize new game
