@@ -95,17 +95,16 @@ void Board::draw()
     }
 }
 
-void Board::start() // TODO: RANDOM FOR EACH PLAYER
+void Board::start()
 {
-    tetromino.draw(6, 3, 0);
+    tetromino.draw(random(PIECES_KINDS),random(ROTATION) , 0);
     tetromino.draw(random(PIECES_KINDS), random(ROTATION), 1);
-
 //    for(int i = 0; i < COLS; i++)
 //        for(int j = 0; j < ROWS; j++)
 //            tetromino.draw(piece, rotation, 0);
 }
-/*
-bool Board::IsPossibleMovement (int pX, int pY, int pPiece, int pRotation)
+
+bool Board::isPossible (int pX, int pY, int pPiece, int pRotation)
 {
     // Checks collision with pieces already stored in the board or the board limits
     // This is just to check the 5x5 blocks of a piece with the appropiate area in the board
@@ -116,15 +115,15 @@ bool Board::IsPossibleMovement (int pX, int pY, int pPiece, int pRotation)
             // Check if the piece is outside the limits of the board
             if (i1 < 0 || i1 > COLS  - 1 || j1 > ROWS - 1)
             {
-                if (mTetrominoes->GetBlockType (pPiece, pRotation, j2, i2) != 0)
-                    return 0;
+                if (tetromino.GetBlockType (pPiece, pRotation, j2, i2) != 0)
+                    return false;
             }
 
             // Check if the piece have collisioned with a block already stored in the map
             if (j1 >= 0)
             {
-                if ((mTetrominoes->GetBlockType (pPiece, pRotation, j2, i2) != 0) &&
-                    (!IsFreeBlock (i1, j1))	)
+                if ((tetromino.GetBlockType (pPiece, pRotation, j2, i2) != 0) &&
+                    (!isFreeBlock (i1, j1))	)
                     return false;
             }
         }
@@ -132,7 +131,6 @@ bool Board::IsPossibleMovement (int pX, int pY, int pPiece, int pRotation)
     // No collision
     return true;
 }
- */
 
 int Board::random(int compare)
 {
