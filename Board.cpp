@@ -136,3 +136,4 @@ int Board::random(int compare)
 {
     return (rand() % compare);
 }
+//comment
