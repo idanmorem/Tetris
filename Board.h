@@ -1,33 +1,40 @@
-#ifndef TETRIS_TETROMINO_H
-#define TETRIS_TETROMINO_H
-#include "IO.h"
-#include <iostream>
+#ifndef TETRIS_BOARD_H
+#define TETRIS_BOARD_H
+#include "Tetromino.h"
 
-#define XRANGE 4
-#define YRANGE 4
-#define PIECES_KINDS 7
-#define ROTATION 4
-#define POSITION 2
-#define STARTBOARD1 24
-#define STARTBOARD2 57
-#define INITIALX 20
-#define INITIALY 20
-#define XSPACE 20
+#define COLS 12
+#define ROWS 18
+#define LEFT 0
+#define RIGHT 1
+#define ROTATE_CLOCKWISE 2
+#define ROTATE_COUNTERCLOCKWISE 3
+#define DROP 4
+#define PIECE_BLOCKS 5
 
-
-class Tetromino
-{
-    const char figure = (char)254;
-    Color color;
-    int x = 1, y = 1;
+class Board {
+    char arrowKeys[5];
+    int direction;
+    int board[COLS][ROWS];
+    Tetromino tetromino;
+    enum {POS_FREE, POS_FILLED};
+    void deleteLine(int tY);
 public:
-    void draw(int piece, int rotation, int boardNum);
-    void setColor(Color c);
-    int getXInitPos (int tPiece, int tRotation);
-    int getYInitPos (int tPiece, int tRotation);
-    int GetBlockType (int piece, int rotation, int x, int y);
+    void draw();
+    void start();
+    void init();
+    void setArrowKeys(const char* keys);
+    int getDirection(char key);
+    void setDirection(int dir) {
+        direction = dir;
+    }
+    bool isGameOver();
+    int getXPos(int pos);
+    int getYPos(int pos);
+    bool isFreeBlock(int tX, int tY);
+    bool isPossible(int tX, int tY, int piece, int rotation);
+    void storePiece(int tX, int tY, int piece, int rotation);
+    void deletePossibleLines();
+    int random(int compare);
 };
 
-
-
-#endif //TETRIS_TETROMINO_H
+#endif //TETRIS_BOARD_H
