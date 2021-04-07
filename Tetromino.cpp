@@ -4,7 +4,7 @@ void Tetromino::setColor(Color c)
 {
     color = c;
 }
-
+//comment
 
 char mTetrominoes[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
 {
