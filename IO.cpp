@@ -1,22 +1,25 @@
 #include "IO.h"
 
+void set_cursor(bool visible) {
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = visible;
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+}
+
 void gotoxy(int x, int y)
 {
-HANDLE hConsoleOutput;
-COORD dwCursorPosition;
-cout.flush();
-dwCursorPosition.X = x;
-dwCursorPosition.Y = y;
-hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-SetConsoleCursorPosition(hConsoleOutput,dwCursorPosition);
+    set_cursor(false);
+    HANDLE hConsoleOutput;
+    COORD dwCursorPosition;
+    cout.flush();
+    dwCursorPosition.X = x;
+    dwCursorPosition.Y = y;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(hConsoleOutput, dwCursorPosition);
 }
 
-void setTextColor(Color c)
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (int)c);
-}
-
-void clear_screen()
+void clearScreen()
 {
     system("cls");
 }
