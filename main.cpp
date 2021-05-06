@@ -1,9 +1,8 @@
-#include <iostream>
 #include "TheGame.h"
 
 int main()
 {
-    clear_screen();
+    clearScreen();
     TheGame game;
     game.init();
 

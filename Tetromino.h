@@ -1,6 +1,8 @@
 #ifndef TETRIS_TETROMINO_H
 #define TETRIS_TETROMINO_H
+
 #include "IO.h"
+#include "GameObjects.h"
 #include <iostream>
 
 #define XRANGE 4
@@ -8,26 +10,31 @@
 #define PIECES_KINDS 7
 #define ROTATION 4
 #define POSITION 2
-#define STARTBOARD1 24
-#define STARTBOARD2 57
-#define INITIALX 20
-#define INITIALY 20
-#define XSPACE 20
+#define NUMOFBLOCKS 4
 
-
-class Tetromino
-{
-    const char figure = (char)254;
-    Color color;
-    int x = 1, y = 1;
+class Tetromino: public GameObjects {
+    int piece = 0, rotation = 0;
+    int currX[NUMOFBLOCKS], currY[NUMOFBLOCKS]; // saving the (x,y) of every new block piece (4 overall)
 public:
-    void draw(int piece, int rotation, int boardNum);
-    void setColor(Color c);
-    int getXInitPos (int tPiece, int tRotation);
-    int getYInitPos (int tPiece, int tRotation);
-    int GetBlockType (int piece, int rotation, int x, int y);
+    using GameObjects::GameObjects;
+    void draw(int xPos, int yPos, int piece, int rotation, int boardNum) override;
+    int getXInitPos(int tPiece, int tRotation)const;
+    int getYInitPos(int tPiece, int tRotation)const;
+    int getBlockType()const {return this->piece;}
+    int getBlockRotation()const {return this->rotation;}
+    int setPiece(int tPiece);
+    int setRotation(int tRotation);
+    int getCurrX(int pos)const {return this->currX[pos];}
+    int getCurrY(int pos)const {return this->currY[pos];}
+    int getLeftmostX()const;
+    int getRightmostX()const;
+    int getSquareType(int pPiece, int pRotation, int pX, int pY)const;
+    char getFigure() {return figure;}
+    void clearTetromino();
+
 };
-
-
-
 #endif //TETRIS_TETROMINO_H
+
+
+
+
