@@ -27,16 +27,16 @@ class TheGame{
     bool drop[2] = {false,false};
     //TODO: maybe "esc_hit" not needed as a member
     bool esc_hit = false;
-    void printMenu();
-    void printInstructions();
+    void printMenu() const;
+    void printInstructions() const;
     void startNew();
     void resume();
     static void exitGame();
-    void menu();
+    void menu() const;
     void down(int numBoard);
+    static void printGameOver(int numBoard) ;
 
 public:
-    //TODO: check which functions can be private
     void init();
     int random(int limit);
     void run();
@@ -44,7 +44,6 @@ public:
     int getXlogicCoord(int console_x_offset)const;
     void gameLoop();
     void clearKeyboardBuffer();
-    void printGameOver(int numBoard);
     void keyboardHit(int numBoard, int dir);
     void waitForKey(char key);
     static void moveLeftRight(int numBoard, int move);

@@ -7,7 +7,7 @@ void Bomb::activeBomb()
         for(int j = 0; j < Board::getCols(); j++)
         {
             if(inBombRadius(i, j))
-                board.resetBoardParameter(i, j);
+                board.resetBoardPosition(i, j);
         }
     }
 }

@@ -24,15 +24,15 @@ void Board::setEmpty()
 {
     for(int i = 0; i < getCols(); i++)
         for(int j = 0; j < getRows(); j++)
-            board[i][j] = POS_FREE;
+            logicBoard[i][j] = POS_FREE;
 }
 
 // update board game on the screen according to received initial x position
-void Board::updateScreen()
+void Board::updateScreen() const
 {
     for(int ix = 0 ; ix < getCols() ; ix++ ) {
         for (int iy = 0; iy < getRows(); iy++) {
-            if (board[ix][iy] == POS_FILLED) {
+            if (logicBoard[ix][iy] == POS_FILLED) {
                 gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
                 cout <<  Tetromino::getFigure();
             }
@@ -45,7 +45,7 @@ bool Board::isGameOver()const
 {
     for(int i = 0; i < getCols(); i++)
     {
-        if (board[i][0] == POS_FILLED)
+        if (logicBoard[i][0] == POS_FILLED)
             return true;
     }
     return false;
@@ -56,7 +56,7 @@ void Board::deleteLine(const int tY)
 {
     for(int j = tY; j > 0 ; j--) {
         for (int i = 0; i < getCols(); i++) {
-            board[i][j] = board[i][j - 1];
+            logicBoard[i][j] = logicBoard[i][j - 1];
         }
     }
 }
@@ -69,7 +69,7 @@ void Board::deletePossibleLines()
         int i = 0;
         while (i < getCols())
         {
-            if(board[i][j] != POS_FILLED)
+            if(logicBoard[i][j] != POS_FILLED)
                 break;
             i++;
         }
@@ -82,7 +82,7 @@ void Board::deletePossibleLines()
     }
 }
 
-void Board::clearLine(int line)
+void Board::clearLine(int line) const
 {
     for(int i = 0; i < getCols(); i++)
     {
@@ -100,9 +100,9 @@ bool Board::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
         for (int j1 = pivY - MATRIX_Y_OFFSET, j2 = 0; j1 < (pivY - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
         {
             if(j1 >= 0)
-                if ((mTetro.getSquareType(pPiece, pRotation,j2,i2) != 0)  && !isFreeBlock(i1,j1) )
+                if ((getSquareType(pPiece, pRotation,j2,i2) != 0)  && !isFreeBlock(i1,j1) )
                     return false;
-            // Check if the piece have collisioned with a block already stored in the map
+            // Check if the piece have collision with a block already stored in the map
         }
     }
     // No collision
@@ -120,7 +120,7 @@ void Board::storePiece(int pivX, int pivY, int pPiece, int pRotation)
             {
                 if ( mTetro.getSquareType(pPiece, pRotation,j2,i2) != 0 )
                 {
-                    board[i1][j1] = POS_FILLED;
+                    logicBoard[i1][j1] = POS_FILLED;
                     counter++;
                 }
                 if(counter == NUMOFBLOCKS)
@@ -131,7 +131,7 @@ void Board::storePiece(int pivX, int pivY, int pPiece, int pRotation)
 }
 
 // drawing the limits of both player's boards
-void Board::drawBoardLimits()
+void Board::drawBoardLimits() const
 {
     for(int j = 0; j < getRows() + 1; j++){
         gotoxy(getInitialX(), getInitialY() + j); // left board left border
@@ -146,7 +146,7 @@ void Board::drawBoardLimits()
     }
 }
 
-void Board::resetBoardParameter(int i, int j)
+void Board::resetBoardPosition(int i, int j)
 {
-    board[i][j] = 0;
+    logicBoard[i][j] = 0;
 }
