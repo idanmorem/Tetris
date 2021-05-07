@@ -30,7 +30,7 @@ void TheGame::startNew()
 }
 
 //main menu of the game
-void TheGame::menu()
+void TheGame::menu() const
 {
     clearScreen();
     printMenu();
@@ -196,8 +196,6 @@ void TheGame::run()
 //TODO: this function should be in class Board or even better in Tetromino with the name "move"
 void TheGame::move(int numBoard, int dir)
 {
-    //TODO: keep the switch but separate into three helper functions: moveLeftRight, rotate, drop
-    //TODO: unite similar code by calculating the different value ahead
     switch (dir) {
         case Board::LEFT_KEY :
             moveLeftRight(numBoard, -1);
@@ -288,7 +286,7 @@ void TheGame::clearKeyboardBuffer()
     fflush(NULL);
 }
 
-void TheGame::printMenu()
+void TheGame::printMenu() const
 {
     cout << "Tetris - Main Menu:\n" << "(1) Start a new game" << endl;
     if (paused)
@@ -296,7 +294,8 @@ void TheGame::printMenu()
     cout << "(8) Present instructions and keys\n" << "(9) EXIT" << endl;
 }
 
-void TheGame::printInstructions() {
+void TheGame::printInstructions() const
+{
     cout
             << "Each player can move the pieces to the: left / right / down or to rotate the pieces in clockwise direction or counterclockwise direction:\ngame is over if your pieces reach the top of the screen, and you can only remove pieces from the screen by filling all the blank space in a line. "
             << endl;

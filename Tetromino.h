@@ -1,8 +1,8 @@
 #ifndef TETRIS_TETROMINO_H
 #define TETRIS_TETROMINO_H
 
-#include "IO.h"
 #include "GameObjects.h"
+#include "IO.h"
 #include <iostream>
 
 #define XRANGE 4
@@ -29,7 +29,7 @@ public:
     int getLeftmostX()const;
     int getRightmostX()const;
     int getSquareType(int pPiece, int pRotation, int pX, int pY)const;
-    char getFigure() {return figure;}
+    static char getFigure() {return figure;}
     void clearTetromino();
 
 };
