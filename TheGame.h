@@ -3,22 +3,20 @@
 
 #include "Board.h"
 #include "IO.h"
+#include "Bomb.h"
 #include <conio.h>
 #include <cstdlib>
 #include <string>
 
-//TODO: instead of define use static constexpr / enum same as line 19
-
-#define NEW_GAME '1'
-#define CONTINUE_GAME '2'
-#define KEYS_INSTRUCTIONS '8'
-#define EXIT '9'
 #define PLAYERS 2
 
 class TheGame{
-    enum {ESC = 27};
     Board board[2];
-    Tetromino tetromino[2];
+    Tetromino t1{board, 256};
+    Tetromino t2{board, 256};
+    Bomb b1{board, 'X'};
+    Bomb b2{board, 'X'};
+    GameObjects* objects[2][2] = {{&t1, &t2}, {&b1, &b2}};
     //TODO: maybe "paused" not needed as a member
     bool paused = false;
     bool over = false;
@@ -34,21 +32,22 @@ class TheGame{
     static void exitGame();
     void menu() const;
     void down(int numBoard);
-    static void printGameOver(int numBoard) ;
+    static void printGameOver(int numBoard);
 
 public:
-    void init();
-    int random(int limit);
+    static constexpr char newGame = '1';
+    static constexpr char continueGame = '2';
+    static constexpr char keysInstructions = '8';
+    static constexpr char exit = '9';
+    enum {ESC = 27};
+    int random(int limit) const;
     void run();
-    void move(int numBoard, int dir);
     int getXlogicCoord(int console_x_offset)const;
     void gameLoop();
     void clearKeyboardBuffer();
     void keyboardHit(int numBoard, int dir);
     void waitForKey(char key);
-    static void moveLeftRight(int numBoard, int move);
-    void rotate(int numBoard, int move);
-    void dropIt(int numBoard);
+    void init();
 };
 
 #endif //TETRIS_THEGAME_H

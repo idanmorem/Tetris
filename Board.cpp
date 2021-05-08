@@ -34,7 +34,7 @@ void Board::updateScreen() const
         for (int iy = 0; iy < getRows(); iy++) {
             if (logicBoard[ix][iy] == POS_FILLED) {
                 gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
-                cout <<  Tetromino::getFigure();
+                cout <<  GameObjects::getFigure();
             }
         }
     }

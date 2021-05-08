@@ -14,22 +14,21 @@
 
 class Tetromino: public GameObjects {
     int piece = 0, rotation = 0;
-    int currX[NUMOFBLOCKS], currY[NUMOFBLOCKS]; // saving the (x,y) of every new block piece (4 overall)
+    int currX[NUMOFBLOCKS] = {}, currY[NUMOFBLOCKS] = {}; // saving the (x,y) of every new block piece (4 overall)
 public:
     using GameObjects::GameObjects;
     void draw(int xPos, int yPos, int piece, int rotation, int boardNum) override;
-    int getXInitPos(int tPiece, int tRotation)const;
-    int getYInitPos(int tPiece, int tRotation)const;
-    int getBlockType()const {return this->piece;}
-    int getBlockRotation()const {return this->rotation;}
-    int setPiece(int tPiece);
-    int setRotation(int tRotation);
-    int getCurrX(int pos)const {return this->currX[pos];}
-    int getCurrY(int pos)const {return this->currY[pos];}
+    int getXInitPos(int tPiece, int tRotation)const {return mInitPos[tPiece][tRotation][0];}
+    int getYInitPos(int tPiece, int tRotation)const {return mInitPos[tPiece][tRotation][1];}
+    int getBlockType()const {return piece;}
+    int getBlockRotation()const {return rotation;}
+    void setPiece(int tPiece) {piece = tPiece;}
+    void setRotation(int tRotation) {rotation = tRotation;}
+    int getCurrX(int pos)const {return currX[pos];}
+    int getCurrY(int pos)const {return currY[pos];}
     int getLeftmostX()const;
     int getRightmostX()const;
     int getSquareType(int pPiece, int pRotation, int pX, int pY)const;
-    static char getFigure() {return figure;}
     void clearTetromino();
 
 };
