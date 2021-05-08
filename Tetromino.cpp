@@ -250,36 +250,12 @@ int mInitPos [PIECES_KINDS][ROTATION][POSITION] =
         },
 };
 
-int Tetromino::getXInitPos(int tPiece, int tRotation)const
-{
-    return mInitPos[tPiece][tRotation][0];
-}
-
-int Tetromino::getYInitPos(int tPiece, int tRotation)const
-{
-    return mInitPos[tPiece][tRotation][1];
-}
-
-int Tetromino::setPiece(int tPiece)
-{
-    this->piece = tPiece;
-    return tPiece;
-}
-
-int Tetromino::setRotation(int tRotation)
-{
-    this->rotation = tRotation;
-    return tRotation;
-}
-
 // draws a tetromino
 void Tetromino::draw(int xPos, int yPos, int mPiece, int mRotation, int boardNum)
 {
-    this->piece = mPiece;// saves the piece that got
-    this->rotation = mRotation;
     int k = 0;
-    this->yOffset += yPos; // if a keyboard hit than updates the y offset
-    this->xOffset += xPos;// if a keyboard hit than updates the x offset
+    yOffset += yPos; // if a keyboard hit than updates the y offset
+    xOffset += xPos;// if a keyboard hit than updates the x offset
     for(int i = 0; i < YRANGE; i++)
     {
         for (int j = 0; j < XRANGE; j++)

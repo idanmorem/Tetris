@@ -3,7 +3,6 @@
 //initialize game
 void TheGame::init()
 {
-    //TODO: missing the following initializations for board in the console: INITIALX, INITIALY etc
     char playerKeys[PLAYERS][Board::KEYS_SIZE + 1] = {"adswx", "jlkim"};
     for(int i = 0; i < PLAYERS; i++)
     {
@@ -35,13 +34,13 @@ void TheGame::menu() const
     clearScreen();
     printMenu();
     char act = _getch();
-    while (act != EXIT) {
-        if (act == NEW_GAME) {                                          // initialize new game
+    while (act != exit) {
+        if (act == newGame) {                                          // initialize new game
             startNew();
-        } else if (act == CONTINUE_GAME) {                              // continue paused game
+        } else if (act == continueGame) {                              // continue paused game
             if (paused)
                 resume();
-        } else if (act == KEYS_INSTRUCTIONS) {                          // print keys and instructions
+        } else if (act == keysInstructions) {                          // print keys and instructions
                 printInstructions();
                 waitForKey(ESC);
         }
@@ -85,12 +84,10 @@ int TheGame::getXlogicCoord(int console_x_offset)const
 }
 
 // generic random function return number between 0 to the parameter "compare"
-int TheGame::random(int limit)
+int TheGame::random(int limit) const
 {
     return (rand() % limit);
 }
-
-
 
 // moves the tetromino down the board
 //TODO: think how to do it more OOP
@@ -187,74 +184,12 @@ void TheGame::run()
 {
     //draws a new random tetromino
     //TODO: should be draw() and the init of tetromino should be in a separated function
-    tetromino[0].draw(0, 0, tetromino[0].setPiece(random(PIECES_KINDS)), tetromino[0].setRotation(random(ROTATION)), 0);
+    t1.setPiece(random(PIECES_KINDS));
+    t1.setRotation(random(ROTATION));
+    t1.draw(0, 0, 0);
     tetromino[1].draw(0, 0, tetromino[1].setPiece(random(PIECES_KINDS)), tetromino[1].setRotation(random(ROTATION)), 1);
     gameLoop();
     paused = !over;   // set "paused" val according to current game status
-}
-
-//TODO: this function should be in class Board or even better in Tetromino with the name "move"
-void TheGame::move(int numBoard, int dir)
-{
-    switch (dir) {
-        case Board::LEFT_KEY :
-            moveLeftRight(numBoard, -1);
-            break;
-        case Board::RIGHT_KEY :
-            moveLeftRight(numBoard, 1);
-            break;
-        case Board::ROTATE_CLOCKWISE :
-            rotate(numBoard, 1);
-            break;
-        case Board::ROTATE_COUNTERCLOCKWISE:
-            rotate(numBoard, -1);
-            break;
-        case Board::DROP :
-        {
-            dropIt(numBoard);
-            break;
-        }
-    }
-}
-
-void TheGame::moveLeftRight(int numBoard, int move) {
-    if (this->tetromino[numBoard].getLeftmostX() > (board[numBoard].getInitialX + numBoard * (STARTBOARD2 - STARTBOARD1) + 1)) {
-        if(board[numBoard].isPossible(getXlogicCoord(tetromino[numBoard].getOffsetX()) - 1,
-                                      tetromino[numBoard].getOffsetY(),
-                                      tetromino[numBoard].getBlockType(),
-                                      tetromino[numBoard].getBlockRotation())) {
-            tetromino[numBoard].clearTetromino();
-            tetromino[numBoard].draw(move, 0, tetromino[numBoard].getBlockType(),
-                                     tetromino[numBoard].getBlockRotation(), numBoard);
-        }
-    }
-}
-
-void TheGame::rotate(int numBoard, int move) {
-    if(board[numBoard].isPossible(getXlogicCoord(tetromino[numBoard].getOffsetX()),
-                                  tetromino[numBoard].getOffsetY(), tetromino[numBoard].getBlockType(),
-                                  (tetromino[numBoard].getBlockRotation() + move) % ROTATION)) {
-        tetromino[numBoard].clearTetromino();
-        tetromino[numBoard].draw(0, 0,tetromino[numBoard].getBlockType(),(tetromino[numBoard].getBlockRotation() + 1) % ROTATION, numBoard);
-    }
-}
-
-void TheGame::dropIt(int numBoard) {
-    drop[numBoard] = true;
-//            while(!stored)
-    while(drop[numBoard])
-    {
-        down(numBoard);
-        over = board[numBoard].isGameOver(); //TEST
-        board[numBoard].deletePossibleLines(); //TEST
-        if(over)
-            return;
-        if(esc_hit)
-            return;
-        else
-            //TODO: this is a wrong recursion
-            gameLoop();
-    }
 }
 
 void TheGame::printGameOver(int numBoard)

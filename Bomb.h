@@ -11,6 +11,7 @@ public:
     int getCurrY()const {return this->currY;}
     void activeBomb();
     bool inBombRadius(int i, int j) const;
+    void draw(int xPos, int yPos)  {}
 };
 
 #endif //TETRIS_BOMB_H
