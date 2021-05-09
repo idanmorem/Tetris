@@ -9,7 +9,7 @@ public:
     using GameObjects::GameObjects;
     int getCurrX()const {return this->currX;}
     int getCurrY()const {return this->currY;}
-    void activeBomb();
+    void activateBomb();
     bool inBombRadius(int i, int j) const;
     void draw(int xPos, int yPos)  {}
 };

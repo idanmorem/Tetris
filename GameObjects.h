@@ -6,7 +6,7 @@
 class GameObjects {
 protected:
     char figure;
-    Board& board;
+    const Board& board;
     int xOffset = 0, yOffset = 0;
 public:
     GameObjects(Board& board, char figure): board(board), figure(figure) {}

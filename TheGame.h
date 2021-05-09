@@ -3,7 +3,8 @@
 
 #include "Board.h"
 #include "IO.h"
-#include "Bomb.h"
+#include "GameObjects.h"
+#include "Tetromino.h"
 #include <conio.h>
 #include <cstdlib>
 #include <string>
