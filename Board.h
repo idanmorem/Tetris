@@ -1,8 +1,8 @@
 #ifndef TETRIS_BOARD_H
 #define TETRIS_BOARD_H
 
-//#include "GameObjects.h"
-#include "Tetromino.h"
+#include "GameObjects.h"
+//#include "Tetromino.h"
 #define PIECE_BLOCKS 4
 #define MATRIX_Y_OFFSET 3
 
