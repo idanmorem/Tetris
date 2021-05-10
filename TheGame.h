@@ -3,7 +3,6 @@
 
 #include "Board.h"
 #include "IO.h"
-#include "GameObjects.h"
 #include "Tetromino.h"
 #include <conio.h>
 #include <cstdlib>
@@ -12,12 +11,11 @@
 #define PLAYERS 2
 
 class TheGame{
+//    IO gameIO;
     Board board[2];
-    Tetromino t1{board, 256};
-    Tetromino t2{board, 256};
-    Bomb b1{board, 'X'};
-    Bomb b2{board, 'X'};
-    GameObjects* objects[2][2] = {{&t1, &t2}, {&b1, &b2}};
+    Tetromino t0{0, (char)256, board[0]};
+    Tetromino t1{1, (char)256, board[1]};
+//    GameObjects* objects[2][2] = {{&t1, &t2}, {&b1, &b2}};
     //TODO: maybe "paused" not needed as a member
     bool paused = false;
     bool over = false;
@@ -31,8 +29,7 @@ class TheGame{
     void startNew();
     void resume();
     static void exitGame();
-    void menu() const;
-    void down(int numBoard);
+    void menu();
     static void printGameOver(int numBoard);
 
 public:
@@ -43,10 +40,8 @@ public:
     enum {ESC = 27};
     int random(int limit) const;
     void run();
-    int getXlogicCoord(int console_x_offset)const;
     void gameLoop();
     void clearKeyboardBuffer();
-    void keyboardHit(int numBoard, int dir);
     void waitForKey(char key);
     void init();
 };

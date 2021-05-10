@@ -8,6 +8,9 @@
 
 using namespace std;
 
+class IO{
+};
+
 // function definition
 void gotoxy(int x, int y);
 void clearScreen();

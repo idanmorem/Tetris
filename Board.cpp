@@ -27,14 +27,14 @@ void Board::setEmpty()
             logicBoard[i][j] = POS_FREE;
 }
 
-// update board game on the screen according to received initial x position
+// update board game on the screen
 void Board::updateScreen() const
 {
     for(int ix = 0 ; ix < getCols() ; ix++ ) {
         for (int iy = 0; iy < getRows(); iy++) {
             if (logicBoard[ix][iy] == POS_FILLED) {
                 gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
-                cout <<  GameObjects::getFigure();
+                cout <<  getTetrominoFigure();
             }
         }
     }
@@ -92,56 +92,20 @@ void Board::clearLine(int line) const
     Sleep(300);
 }
 
-bool Board::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
-{
-    // This is just to check the 4x4 blocks of a piece with the appropriate area in the board
-    for (int i1 = pivX, i2 = 0; i1 < pivX + NUMOFBLOCKS; i1++, i2++)
-    {
-        for (int j1 = pivY - MATRIX_Y_OFFSET, j2 = 0; j1 < (pivY - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
-        {
-            if(j1 >= 0)
-                if ((getSquareType(pPiece, pRotation,j2,i2) != 0)  && !isFreeBlock(i1,j1) )
-                    return false;
-            // Check if the piece have collision with a block already stored in the map
-        }
-    }
-    // No collision
-    return true;
-}
 
-void Board::storePiece(int pivX, int pivY, int pPiece, int pRotation)
-{
-    int counter = 0;
-    for (int i1=pivX,i2 = 0; i1 < pivX+ NUMOFBLOCKS ;i1++,i2++)
-    {
-        for (int j1 = pivY-MATRIX_Y_OFFSET,j2 = 0; j1 < (pivY-MATRIX_Y_OFFSET) +NUMOFBLOCKS; j1++,j2++)
-        {
-            if(j1 >= 0)
-            {
-                if ( mTetro.getSquareType(pPiece, pRotation,j2,i2) != 0 )
-                {
-                    logicBoard[i1][j1] = POS_FILLED;
-                    counter++;
-                }
-                if(counter == NUMOFBLOCKS)
-                    return;
-            }
-        }
-    }
-}
 
 // drawing the limits of both player's boards
 void Board::drawBoardLimits() const
 {
     for(int j = 0; j < getRows() + 1; j++){
-        gotoxy(getInitialX(), getInitialY() + j); // left board left border
+        gotoxy(getInitialX(), getInitialY() + j); //left border
         std::cout << '|' << std::endl;
-        gotoxy(getInitialX() + getCols() + 1, getInitialY() + j); //left board right border
+        gotoxy(getInitialX() + getCols() + 1, getInitialY() + j); //right border
         std::cout << '|' << std::endl;
     }
     for(int i = 0; i < getCols() + 2; i++)
     {
-        gotoxy(getInitialX() + i, getInitialY() + getRows()); //left board floor
+        gotoxy(getInitialX() + i, getInitialY() + getRows()); //floor
         std::cout << '*' << std::endl;
     }
 }
@@ -149,4 +113,12 @@ void Board::drawBoardLimits() const
 void Board::resetBoardPosition(int i, int j)
 {
     logicBoard[i][j] = 0;
+}
+
+const char Board::getTetrominoFigure() {
+    return tetrominoFigure;
+}
+
+void Board::setBoardPosition(int i1,int j1) {
+    logicBoard[i1][j1] = POS_FILLED;
 }

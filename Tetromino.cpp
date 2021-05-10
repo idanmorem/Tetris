@@ -1,4 +1,5 @@
 #include "Tetromino.h"
+#include "TheGame.h"
 
 // matrix defining all the tetromino pieces and their rotation
 char mTetrominoes[PIECES_KINDS][ROTATION][XRANGE][YRANGE] =
@@ -251,7 +252,7 @@ int mInitPos [PIECES_KINDS][ROTATION][POSITION] =
 };
 
 // draws a tetromino
-void Tetromino::draw(int xPos, int yPos, int mPiece, int mRotation, int boardNum)
+void Tetromino::draw()
 {
     int k = 0;
     yOffset += yPos; // if a keyboard hit than updates the y offset
@@ -260,13 +261,13 @@ void Tetromino::draw(int xPos, int yPos, int mPiece, int mRotation, int boardNum
     {
         for (int j = 0; j < XRANGE; j++)
         {
-            if(mTetrominoes[mPiece][mRotation][i][j] != 0) {
+            if(mTetrominoes[piece][rotation][i][j] != 0) {
 //                if (j > this->xOffset)
 //                    this->xOffset++; // updates the offset to prevent crashing borders
-                gotoxy(STARTBOARD1 + getXInitPos(piece, rotation) + j + boardNum*(STARTBOARD2-STARTBOARD1) + this->xOffset, INITIALY + getYInitPos(piece, rotation) + i + this->yOffset);
+                gotoxy(board.getInitialX() + getXInitPos(piece, rotation) + j + this->xOffset, board.getInitialY() + getYInitPos(piece, rotation) + i + this->yOffset);
                 std::cout << figure;
-                this->currX[k] = STARTBOARD1 + getXInitPos(piece, rotation) + j + boardNum*(STARTBOARD2-STARTBOARD1) + this->xOffset; // saves the block x
-                this->currY[k] = INITIALY + getYInitPos(piece, rotation) + i + this->yOffset;// saves the block y
+                this->currX[k] = board.getInitialX() + getXInitPos(piece, rotation) + j + this->xOffset; // saves the block x
+                this->currY[k] = board.getInitialY() + getYInitPos(piece, rotation) + i + this->yOffset;// saves the block y
                 k++;
                 if (k == NUMOFBLOCKS) // if already printed four blocks return
                     return;
@@ -310,5 +311,170 @@ void Tetromino::clearTetromino()
     {
         gotoxy(getCurrX(i), getCurrY(i));
         std::cout << ' ';
+    }
+}
+int Tetromino::getXInitPos(int tPiece, int tRotation)const
+{
+    return mInitPos[tPiece][tRotation][0];
+}
+int Tetromino::getYInitPos(int tPiece, int tRotation)const
+{
+    return mInitPos[tPiece][tRotation][1];
+}
+
+// moves the tetromino down the board
+void Tetromino::down()
+{
+    if(getOffsetY() < board.getRows()-1)
+    {
+        if (!isPossible(getXlogicCoord(getOffsetX()),getOffsetY() + 1, getBlockType(), getBlockRotation()))
+        {
+            storePiece(getXlogicCoord(getOffsetX()), getOffsetY(), getBlockType(), getBlockRotation());
+            stored = true;
+            drop[numBoard] = false;
+            initOffsetX();
+            initOffsetY();
+            //draws a new random tetromino
+            draw();
+        } else {
+            clearTetromino();
+            yOffset++;
+            draw();
+            if(drop[numBoard])
+                Sleep(1);
+            else
+                Sleep(400); // TEST
+        }
+    }
+    else
+    {
+        storePiece(getXlogicCoord(getOffsetX()),getOffsetY(), getBlockType(),getBlockRotation());
+        stored = true;
+        drop[numBoard] = false;
+        //draws a new random tetromino
+        initOffsetX();
+        initOffsetY();
+        draw();
+    }
+}
+
+void Tetromino::move(int dir)
+{
+    switch (dir) {
+        case Board::LEFT_KEY :
+            xOffset--;
+            moveLeftRight(-1);
+            break;
+        case Board::RIGHT_KEY :
+            xOffset++;
+            moveLeftRight(1);
+            break;
+        case Board::ROTATE_CLOCKWISE :
+            rotation++;
+            rotate(1);
+            break;
+        case Board::ROTATE_COUNTERCLOCKWISE:
+            rotate(-1);
+            break;
+        case Board::DROP :
+        {
+            dropIt();
+            break;
+        }
+    }
+}
+//TODO:: missing right border check
+void Tetromino::moveLeftRight(int newOffset) {
+    if (getLeftmostX() > (board.getInitialX() + 1)) {
+        if(isPossible(getXlogicCoord(getOffsetX()) + newOffset, getOffsetY(), getBlockType(), getBlockRotation())) {
+            xOffset += newOffset;
+            clearTetromino();
+            draw();
+        }
+    }
+}
+
+void Tetromino::rotate(int newOffset) {
+    if(isPossible(getXlogicCoord(getOffsetX()), getOffsetY(), getBlockType(), (getBlockRotation() + newOffset) % ROTATION)) {
+        rotation = (rotation + newOffset) % ROTATION;
+        clearTetromino();
+        draw();
+    }
+}
+
+void Tetromino::dropIt() {
+    drop[numBoard] = true;
+//            while(!stored)
+    while(drop[numBoard])
+    {
+        down();
+        over = board.isGameOver(); //TEST
+        board.deletePossibleLines(); //TEST
+        if(over)
+            return;
+        if(esc_hit)
+            return;
+        else
+            //TODO: this is a wrong recursion
+            gameLoop();
+    }
+}
+
+int Tetromino::getXlogicCoord(int console_x_offset)const
+{
+    return (console_x_offset + 4);
+}
+
+void Tetromino::init(int kind, int rotate) {
+    setPiece(kind);
+    setRotation(rotate);
+}
+
+void Tetromino::keyboardHit(int dir)
+{
+    move(dir);
+    over = board.isGameOver();
+    board.deletePossibleLines();
+}
+
+const int Tetromino::getNumBoard() const {
+    return numBoard;
+}
+
+bool Tetromino::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
+{
+    // This is just to check the 4x4 blocks of a piece with the appropriate area in the board
+    for (int i1 = pivX, i2 = 0; i1 < pivX + NUMOFBLOCKS; i1++, i2++)
+    {
+        for (int j1 = pivY - MATRIX_Y_OFFSET, j2 = 0; j1 < (pivY - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
+        {
+            if(j1 >= 0)
+                if ((getSquareType(pPiece, pRotation,j2,i2) != 0)  && !board.isFreeBlock(i1,j1) )
+                    return false;
+            // Check if the piece have collision with a block already stored in the map
+        }
+    }
+    // No collision
+    return true;
+}
+
+void Tetromino::storePiece(int pivX, int pivY, int pPiece, int pRotation)
+{
+    int counter = 0;
+    for (int i1=pivX,i2 = 0; i1 < pivX+ NUMOFBLOCKS ;i1++,i2++)
+    {
+        for (int j1 = pivY-MATRIX_Y_OFFSET,j2 = 0; j1 < (pivY-MATRIX_Y_OFFSET) +NUMOFBLOCKS; j1++,j2++)
+        {
+            if(j1 >= 0)
+            {
+                if ( getSquareType(pPiece, pRotation,j2,i2) != 0 )
+                {
+                    board.setBoardPosition(i1, j1);
+                    counter++;
+                }
+                if(counter == NUMOFBLOCKS)
+                    return;
+            }
+        }
     }
 }

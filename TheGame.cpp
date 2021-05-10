@@ -1,6 +1,7 @@
 #include "TheGame.h"
 
 //initialize game
+//TODO: make it as a Board::init();
 void TheGame::init()
 {
     char playerKeys[PLAYERS][Board::KEYS_SIZE + 1] = {"adswx", "jlkim"};
@@ -22,15 +23,14 @@ void TheGame::startNew()
     for(int i = 0; i < PLAYERS; i++) {
         board[i].drawBoardLimits();
         board[i].setEmpty();
-        tetromino[i].initOffsetX();
-        tetromino[i].initOffsetY();
+        t0.initOffsetX();
+        t1.initOffsetY();
     }
     run();
 }
 
 //main menu of the game
-void TheGame::menu() const
-{
+void TheGame::menu() {
     clearScreen();
     printMenu();
     char act = _getch();
@@ -78,53 +78,12 @@ void TheGame::resume()
     run();                                        // run the game again
 }
 
-int TheGame::getXlogicCoord(int console_x_offset)const
-{
-    return (console_x_offset + 4);
-}
+
 
 // generic random function return number between 0 to the parameter "compare"
 int TheGame::random(int limit) const
 {
     return (rand() % limit);
-}
-
-// moves the tetromino down the board
-//TODO: think how to do it more OOP
-//      1) board, tetromino - "drop and check" (this should include clear and draw)
-//      2) above returned "hit" (ground or stored tetromino) - store the current tetromino and create the next
-void TheGame::down(int numBoard)
-{
-    if(this->tetromino[numBoard].getOffsetY() < board[numBoard].getRows()-1)
-    {
-        if (!board[numBoard].isPossible(getXlogicCoord(tetromino[numBoard].getOffsetX()),tetromino[numBoard].getOffsetY() + 1, tetromino[numBoard].getBlockType(),tetromino[numBoard].getBlockRotation()))
-        {
-            board[numBoard].storePiece(getXlogicCoord(tetromino[numBoard].getOffsetX()),tetromino[numBoard].getOffsetY(), tetromino[numBoard].getBlockType(),tetromino[numBoard].getBlockRotation());
-            stored = true;
-            drop[numBoard] = false;
-            tetromino[numBoard].initOffsetX();
-            tetromino[numBoard].initOffsetY();
-            //draws a new random tetromino
-            tetromino[numBoard].draw(0, 0, tetromino[numBoard].setPiece(random(PIECES_KINDS)),tetromino[numBoard].setRotation(random(ROTATION)), numBoard);
-        } else {
-            clearTetromino();
-            tetromino[numBoard].draw(0, 1, tetromino[numBoard].getBlockType(), tetromino[numBoard].getBlockRotation(),numBoard);
-            if(drop[numBoard])
-                Sleep(1);
-            else
-                Sleep(400); // TEST
-        }
-    }
-    else
-    {
-        board[numBoard].storePiece(getXlogicCoord(tetromino[numBoard].getOffsetX()),tetromino[numBoard].getOffsetY(), tetromino[numBoard].getBlockType(),tetromino[numBoard].getBlockRotation());
-        stored = true;
-        drop[numBoard] = false;
-        //draws a new random tetromino
-        tetromino[numBoard].initOffsetX();
-        tetromino[numBoard].initOffsetY();
-        tetromino[numBoard].draw(0, 0, tetromino[numBoard].setPiece(random(PIECES_KINDS)),tetromino[numBoard].setRotation(random(ROTATION)), numBoard);
-    }
 }
 
 void TheGame::gameLoop()
@@ -139,17 +98,17 @@ void TheGame::gameLoop()
             if(esc_hit || (key == ESC))
                 return;
             if ((dir = board[0].getDirection(key)) != -1 && !drop[0])
-                keyboardHit(0, dir);
+                t0.keyboardHit(dir);
             else if ((dir = board[1].getDirection(key)) != -1 && !drop[1])
-                keyboardHit(1, dir);
+                t1.keyboardHit(dir);
         }
         //TODO: try to remove the need for "stored" bool by handling it inside down() function
         //      the idea is on hit to replace the current tetromino with the next one
         if(!stored) {
             if(!drop[1])
-                down(0);
+                t0.down();
             if(!drop[0])
-                down(1);
+               t1.down();
         }
         stored = false;
 
@@ -171,23 +130,14 @@ void TheGame::gameLoop()
     }
 }
 
-//TODO: this function should be in class Board or even better in Tetromino with the name "move"
-void TheGame::keyboardHit(int numBoard, int dir)
-{
-    move(numBoard,dir);
-    over = board[numBoard].isGameOver();
-    board[numBoard].deletePossibleLines();
-}
-
 // run the game by using _kbhit() and _getch()
 void TheGame::run()
 {
     //draws a new random tetromino
-    //TODO: should be draw() and the init of tetromino should be in a separated function
-    t1.setPiece(random(PIECES_KINDS));
-    t1.setRotation(random(ROTATION));
-    t1.draw(0, 0, 0);
-    tetromino[1].draw(0, 0, tetromino[1].setPiece(random(PIECES_KINDS)), tetromino[1].setRotation(random(ROTATION)), 1);
+    t0.init(random(PIECES_KINDS), random(ROTATION));
+    t1.init(random(PIECES_KINDS), random(ROTATION));
+    t0.draw();
+    t1.draw();
     gameLoop();
     paused = !over;   // set "paused" val according to current game status
 }
