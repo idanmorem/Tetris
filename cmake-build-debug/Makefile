@@ -180,32 +180,59 @@ Bomb.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\Bomb.cpp.s
 .PHONY : Bomb.cpp.s
 
-GameObjects.obj: GameObjects.cpp.obj
+ComputerPlayer.obj: ComputerPlayer.cpp.obj
 
-.PHONY : GameObjects.obj
+.PHONY : ComputerPlayer.obj
 
 # target to build an object file
-GameObjects.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\GameObjects.cpp.obj
-.PHONY : GameObjects.cpp.obj
+ComputerPlayer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj
+.PHONY : ComputerPlayer.cpp.obj
 
-GameObjects.i: GameObjects.cpp.i
+ComputerPlayer.i: ComputerPlayer.cpp.i
 
-.PHONY : GameObjects.i
+.PHONY : ComputerPlayer.i
 
 # target to preprocess a source file
-GameObjects.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\GameObjects.cpp.i
-.PHONY : GameObjects.cpp.i
+ComputerPlayer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\ComputerPlayer.cpp.i
+.PHONY : ComputerPlayer.cpp.i
 
-GameObjects.s: GameObjects.cpp.s
+ComputerPlayer.s: ComputerPlayer.cpp.s
 
-.PHONY : GameObjects.s
+.PHONY : ComputerPlayer.s
 
 # target to generate assembly for a file
-GameObjects.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\GameObjects.cpp.s
-.PHONY : GameObjects.cpp.s
+ComputerPlayer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\ComputerPlayer.cpp.s
+.PHONY : ComputerPlayer.cpp.s
+
+HumanPlayer.obj: HumanPlayer.cpp.obj
+
+.PHONY : HumanPlayer.obj
+
+# target to build an object file
+HumanPlayer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj
+.PHONY : HumanPlayer.cpp.obj
+
+HumanPlayer.i: HumanPlayer.cpp.i
+
+.PHONY : HumanPlayer.i
+
+# target to preprocess a source file
+HumanPlayer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\HumanPlayer.cpp.i
+.PHONY : HumanPlayer.cpp.i
+
+HumanPlayer.s: HumanPlayer.cpp.s
+
+.PHONY : HumanPlayer.s
+
+# target to generate assembly for a file
+HumanPlayer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\HumanPlayer.cpp.s
+.PHONY : HumanPlayer.cpp.s
 
 IO.obj: IO.cpp.obj
 
@@ -233,6 +260,33 @@ IO.s: IO.cpp.s
 IO.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\IO.cpp.s
 .PHONY : IO.cpp.s
+
+Player.obj: Player.cpp.obj
+
+.PHONY : Player.obj
+
+# target to build an object file
+Player.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\Player.cpp.obj
+.PHONY : Player.cpp.obj
+
+Player.i: Player.cpp.i
+
+.PHONY : Player.i
+
+# target to preprocess a source file
+Player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\Player.cpp.i
+.PHONY : Player.cpp.i
+
+Player.s: Player.cpp.s
+
+.PHONY : Player.s
+
+# target to generate assembly for a file
+Player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Tetris.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Tetris.dir\Player.cpp.s
+.PHONY : Player.cpp.s
 
 Tetromino.obj: Tetromino.cpp.obj
 
@@ -330,12 +384,18 @@ help:
 	@echo ... Bomb.obj
 	@echo ... Bomb.i
 	@echo ... Bomb.s
-	@echo ... GameObjects.obj
-	@echo ... GameObjects.i
-	@echo ... GameObjects.s
+	@echo ... ComputerPlayer.obj
+	@echo ... ComputerPlayer.i
+	@echo ... ComputerPlayer.s
+	@echo ... HumanPlayer.obj
+	@echo ... HumanPlayer.i
+	@echo ... HumanPlayer.s
 	@echo ... IO.obj
 	@echo ... IO.i
 	@echo ... IO.s
+	@echo ... Player.obj
+	@echo ... Player.i
+	@echo ... Player.s
 	@echo ... Tetromino.obj
 	@echo ... Tetromino.i
 	@echo ... Tetromino.s

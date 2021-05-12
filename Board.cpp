@@ -122,3 +122,47 @@ const char Board::getTetrominoFigure() {
 void Board::setBoardPosition(int i1,int j1) {
     logicBoard[i1][j1] = POS_FILLED;
 }
+
+// return the score that the last turn gain
+int Board::FindPosScore() {
+
+    int y, x = 0,counter = 0;
+    for (y = 0; y < getRows(); y++) {
+        while (x < getCols()) {
+            if (logicBoard[x][y] != POS_FILLED)
+                break;
+            x++;
+        }
+        if (x == getCols())
+            counter++;
+    }
+    switch (counter) {
+        case (1):
+            return (y + 1) * 40;
+        case (2):
+            return (y + 1) * 100;
+        case (3):
+            return (y + 1) * 300;
+        case (4):
+            return (y + 1) * 1200;
+        default:
+            return -1;
+    }
+}
+
+// dont forget to free in the next function
+int* Board::GetRowGates(int row)
+{
+    int* res = new int[12];
+    int counter = 0;
+    for( int x = 11 ; x <= 0  ; x--)
+    {
+        if(logicBoard[x][row] == POS_FILLED)
+            res[x] = ++counter;
+        else{
+            counter = 0;
+            res[x] = counter;
+        }
+    }
+    return res;
+}

@@ -23,9 +23,9 @@ void TheGame::startNew()
     for(int i = 0; i < PLAYERS; i++) {
         board[i].drawBoardLimits();
         board[i].setEmpty();
-        t0.initOffsetX();
-        t1.initOffsetY();
     }
+    t0.initOffsetX();
+    t1.initOffsetY();
     run();
 }
 
@@ -41,8 +41,8 @@ void TheGame::menu() {
             if (paused)
                 resume();
         } else if (act == keysInstructions) {                          // print keys and instructions
-                printInstructions();
-                waitForKey(ESC);
+            printInstructions();
+            waitForKey(ESC);
         }
         clearScreen();
         printMenu();
@@ -78,14 +78,12 @@ void TheGame::resume()
     run();                                        // run the game again
 }
 
-
-
 // generic random function return number between 0 to the parameter "compare"
 int TheGame::random(int limit) const
 {
     return (rand() % limit);
 }
-
+/*
 void TheGame::gameLoop()
 {
     int key = 0, dir = 0;
@@ -108,7 +106,8 @@ void TheGame::gameLoop()
             if(!drop[1])
                 t0.down();
             if(!drop[0])
-               t1.down();
+                t1.down();
+            Sleep(400);
         }
         stored = false;
 
@@ -129,7 +128,7 @@ void TheGame::gameLoop()
         }
     }
 }
-
+*/
 // run the game by using _kbhit() and _getch()
 void TheGame::run()
 {
@@ -164,7 +163,6 @@ void TheGame::clearKeyboardBuffer()
     {
         junk = _getch();
         if(junk == ESC) {
-            esc_hit = true;
             return;
         }
     }
@@ -173,9 +171,12 @@ void TheGame::clearKeyboardBuffer()
 
 void TheGame::printMenu() const
 {
-    cout << "Tetris - Main Menu:\n" << "(1) Start a new game" << endl;
+    cout << "Tetris - Main Menu:" << endl;
+    cout << "(1) Start a new - game Human vs Human" << endl;
+    cout << "(2) Start a new - game Human vs Computer" << endl;
+    cout << "(3) Start a new - game Computer vs Computer" << endl;
     if (paused)
-        cout << "(2) Continue a paused game " << endl;
+        cout << "(4) Continue a paused game " << endl;
     cout << "(8) Present instructions and keys\n" << "(9) EXIT" << endl;
 }
 
@@ -193,4 +194,64 @@ void TheGame::printInstructions() const
             "DROP:                            x or X                     m or M\n" << endl;
 
     cout << "Please press ESC to return to the main menu" << endl;
+}
+
+void TheGame::gameLoop()
+{
+    while (true) {
+        int key = 0, dir[2] = {Board::KEYS_SIZE, Board::KEYS_SIZE};
+        while(dir[0] == Board::KEYS_SIZE || dir[1] == Board::KEYS_SIZE)
+        {
+            if(_kbhit()) {
+                key = _getch();
+                clearKeyboardBuffer();
+                if (key == ESC)
+                    return;
+                if(dir[0] == Board::KEYS_SIZE) {
+                    if ((dir[0] = board[0].getDirection(key)) != -1) {
+                        t0.keyboardHit(dir[0]);
+                    }
+                }
+                else if ((dir[1] = board[1].getDirection(key)) != -1)
+                    t1.keyboardHit(dir[1]);
+            }
+        }
+        if(checkGameStatus())
+            return;
+        }
+}
+
+bool TheGame::checkGameStatus()
+{
+    for(int i = 0; i < PLAYERS; i++)
+    {
+        if(board[i].isGameOver())
+            over += (i+1);
+    }
+    switch (over){
+        case CONTINUE:
+            return false;
+        case PLAYER0:
+            printGameOver(0);
+            return true;
+        case PLAYER1:
+            printGameOver(1);
+            return true;
+        case TIE:
+            printTie();
+            return true;
+    }
+    return false;
+}
+
+void TheGame::printTie()
+{
+    int junk;
+    clearScreen();
+    std::cout << "We have a tie!";
+    std::cout << '\n';
+    std::cout << "Press any key to continue";
+    fflush(NULL);
+    junk = _getch();
+    //    Sleep(500);
 }

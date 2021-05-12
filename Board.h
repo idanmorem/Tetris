@@ -17,11 +17,13 @@ private:
     int logicBoard[cols][rows] = {};
     enum {POS_FREE, POS_FILLED};
     void deleteLine(int tY);
-    //TODO: decide whether to handle tetromino in Board or TheGame (it is possible to have a pointer to tetromino in the other class)
-    //Tetromino mTetro;
     char arrowKeys[KEYS_SIZE];
 public:
-//    Board();
+
+
+    int getLogicVal(int x,int y) { return logicBoard[x][y]; }
+    int setLogicVal(int x,int y,int val) {  logicBoard[x][y] = val; }
+
     void setEmpty();
     static const char getTetrominoFigure();
     void setArrowKeys(char keys[KEYS_SIZE+1]);
@@ -44,6 +46,12 @@ public:
     static const int getRows() {return rows;}
     void resetBoardPosition(int i, int j);
     void setBoardPosition(int i1,int j1);
+
+    int FindPosScore();
+    void FindBestPos();
+    int* GetRowGates(int row);
+
+
 };
 
 #endif //TETRIS_BOARD_H

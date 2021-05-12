@@ -10,8 +10,11 @@ void Bomb::activateBomb() //after you decide the location this is actual bombing
             if(inBombRadius(i, j))
             {
                 counter++;
-            }
                 board.resetBoardPosition(i, j);
+                gotoxy(i+board.getInitialX(), j+board.getInitialY());
+                std::cout << ' ';
+                board.updateScreen();
+            }
         }
     }
 }

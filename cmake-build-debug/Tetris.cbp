@@ -94,16 +94,28 @@
 		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h">
 			<Option target="Tetris"/>
 		</Unit>
-		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/GameObjects.cpp">
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.cpp">
 			<Option target="Tetris"/>
 		</Unit>
-		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/GameObjects.h">
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h">
+			<Option target="Tetris"/>
+		</Unit>
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.cpp">
+			<Option target="Tetris"/>
+		</Unit>
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h">
 			<Option target="Tetris"/>
 		</Unit>
 		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.cpp">
 			<Option target="Tetris"/>
 		</Unit>
 		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h">
+			<Option target="Tetris"/>
+		</Unit>
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.cpp">
+			<Option target="Tetris"/>
+		</Unit>
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h">
 			<Option target="Tetris"/>
 		</Unit>
 		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.cpp">
