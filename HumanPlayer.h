@@ -1,0 +1,13 @@
+#ifndef TETRIS_HUMANPLAYER_H
+#define TETRIS_HUMANPLAYER_H
+#include "Player.h"
+
+// HumanPlayer.h
+class HumanPlayer: public Player {
+public:
+    using Player::Player; // use the ctor of the base, as is
+    int makeTurn() override; // we override the virtual function of the base
+};
+
+
+#endif //TETRIS_HUMANPLAYER_H
