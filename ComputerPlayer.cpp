@@ -1,37 +1,45 @@
 #include "ComputerPlayer.h"
 #include "TheGame.h"
 
-
-int ComputerPlayer::makeTurn() {
-
-    switch (this->level)
-    {
+// TODO : ABSORB GAME LEVEL
+// return true if the next move should be a random move
+bool ComputerPlayer::isWiseMove() const {
+    switch (level) {
         case 'a':  // BEST player level
-            return ExactMove();
-        case 'b':{  // GOOD player level
-            if (40 != rand()%40 +1)
-                return ExactMove();
+            return true;
+        case 'b':{ // GOOD player level
+            if (rand() % 40 == 1)
+                return false;
             else
-                return RandMove();
+                return true;
         }
         case 'c':{     // NOVICE player level
-            if ( 10 != rand()%10 +1)
-                return ExactMove();
+            if (rand() % 10 == 1)
+                return false;
             else
-                return RandMove();
+                return true;
         }
     }
-    return -1;
+    return true;
 }
 
-int ComputerPlayer::ExactMove() {
 
-    t.FindBestPos();
-    //if possiblePath - save the path
-    //make the path moves
-    return -1; //TEST ONLY
+
+void ComputerPlayer::makeTurn() {
+
+    if (t.getOffsetX() == 4 && t.getOffsetY() == 0){         // if Tetromino is at his starting position
+        setWise(isWiseMove());                         // check if the next move is wiseMove
+        if(wise)                                            // if it wise move, find(and set) the best position and rotation for the Tetromino
+            t.FindBestPos();
+    }
+    if (wise)
+        t.moveWiseStep();
+    else
+        t.moveRandomStep();
 }
 
-int ComputerPlayer::RandMove() const {
-    return -1; //TEST ONLY
-}
+
+
+
+
+

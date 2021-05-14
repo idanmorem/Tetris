@@ -1,7 +1,6 @@
 #include "TheGame.h"
 
 //initialize game
-//TODO: make it as a Board::init();
 void TheGame::init()
 {
     char playerKeys[PLAYERS][Board::KEYS_SIZE + 1] = {"adswx", "jlkim"};
@@ -24,8 +23,23 @@ void TheGame::startNew()
         board[i].drawBoardLimits();
         board[i].setEmpty();
     }
-    t0.initOffsetX();
-    t1.initOffsetY();
+    switch(type)
+    {
+        case newGameHvsH :
+            players[0] = &h0;
+            players[1] = &h1;
+            break;
+        case newGameHvsC :
+            players[0] = &h0;
+            players[1] = &c1;
+            break;
+        case newGameCvsC :
+            players[0] = &c0;
+            players[1] = &c1;
+            break;
+        default:
+            break;
+    }
     run();
 }
 
@@ -33,24 +47,44 @@ void TheGame::startNew()
 void TheGame::menu() {
     clearScreen();
     printMenu();
-    char act = _getch();
-    while (act != exit) {
-        if (act == newGame) {                                          // initialize new game
-            startNew();
-        } else if (act == continueGame) {                              // continue paused game
-            if (paused)
-                resume();
-        } else if (act == keysInstructions) {                          // print keys and instructions
-            printInstructions();
-            waitForKey(ESC);
+    char act = (char)getchar(); //TEST ONLY
+//    char act = (char)_getch();
+    char lvl = 0;
+    while ( act != exit) {
+        switch (act) {
+            case newGameHvsH :            // start new game Human vs Human
+                setType(newGameHvsH);
+                startNew();
+                break;
+            case newGameHvsC :            // start new game Human vs Computer
+                setType(newGameHvsC);
+                std::cout << " Please enter Computer game level \n(a) - Best\n(b) - Good\n(c) - Novice"<< std::endl;
+                startNew();
+                break;
+            case newGameCvsC :            // start new game  Computer vs Computer
+                setType(newGameCvsC);
+                std::cout << " Please enter Computer game level \n(a) - Best\n(b) - Good\n(c) - Novice"<< std::endl;
+                startNew();
+                break;
+            case continueGame :            // continue paused game
+                if (paused)
+                    resume();
+                break;
+            case keysInstructions :
+                printInstructions();        // print keys and instructions
+                waitForKey(ESC);
+                break;
+            default:
+                break;
         }
         clearScreen();
         printMenu();
-        act = (char) _getch();
+        act = (char)_getch();
     }
     exitGame();
 }
 
+//waiting for the key
 void TheGame::waitForKey(char key)
 {
     char act = (char) _getch();
@@ -83,6 +117,7 @@ int TheGame::random(int limit) const
 {
     return (rand() % limit);
 }
+
 /*
 void TheGame::gameLoop()
 {
@@ -129,6 +164,7 @@ void TheGame::gameLoop()
     }
 }
 */
+
 // run the game by using _kbhit() and _getch()
 void TheGame::run()
 {
@@ -137,10 +173,12 @@ void TheGame::run()
     t1.init(random(PIECES_KINDS), random(ROTATION));
     t0.draw();
     t1.draw();
+    Sleep(2000); //TEST
     gameLoop();
     paused = !over;   // set "paused" val according to current game status
 }
 
+// prints game over depends on the numBoard
 void TheGame::printGameOver(int numBoard)
 {
     int junk;
@@ -169,17 +207,20 @@ void TheGame::clearKeyboardBuffer()
     fflush(NULL);
 }
 
+// prints the menu
 void TheGame::printMenu() const
 {
-    cout << "Tetris - Main Menu:" << endl;
-    cout << "(1) Start a new - game Human vs Human" << endl;
-    cout << "(2) Start a new - game Human vs Computer" << endl;
-    cout << "(3) Start a new - game Computer vs Computer" << endl;
+    cout << "Tetris - Main Menu:\n";
+    cout << "(1) Start a new - game Human vs Human\n";
+    cout << "(2) Start a new - game Human vs Computer\n";
+    cout << "(3) Start a new - game Computer vs Computer\n";
     if (paused)
-        cout << "(4) Continue a paused game " << endl;
-    cout << "(8) Present instructions and keys\n" << "(9) EXIT" << endl;
+        cout << "(4) Continue a paused game\n";
+    cout << "(8) Present instructions and keys\n";
+    cout <<"(9) EXIT" << endl;
 }
 
+//prints the instructions
 void TheGame::printInstructions() const
 {
     cout
@@ -196,33 +237,18 @@ void TheGame::printInstructions() const
     cout << "Please press ESC to return to the main menu" << endl;
 }
 
-void TheGame::gameLoop()
-{
+// the main game loop that keeps on until the game is finished
+void TheGame::gameLoop() {
     while (true) {
-        int key = 0, dir[2] = {Board::KEYS_SIZE, Board::KEYS_SIZE};
-        while(dir[0] == Board::KEYS_SIZE || dir[1] == Board::KEYS_SIZE)
-        {
-            if(_kbhit()) {
-                key = _getch();
-                clearKeyboardBuffer();
-                if (key == ESC)
-                    return;
-                if(dir[0] == Board::KEYS_SIZE) {
-                    if ((dir[0] = board[0].getDirection(key)) != -1) {
-                        t0.keyboardHit(dir[0]);
-                    }
-                }
-                else if ((dir[1] = board[1].getDirection(key)) != -1)
-                    t1.keyboardHit(dir[1]);
-            }
-        }
-        if(checkGameStatus())
+        players[0]->makeTurn();
+        players[1]->makeTurn();
+        if (checkGameStatus())
             return;
-        }
+    }
 }
 
-bool TheGame::checkGameStatus()
-{
+// checks if the game is over/tie/continue
+bool TheGame::checkGameStatus(){
     for(int i = 0; i < PLAYERS; i++)
     {
         if(board[i].isGameOver())

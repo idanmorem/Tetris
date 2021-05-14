@@ -11,7 +11,7 @@ public:
     static constexpr int rows = 18;
     enum {LEFT_KEY, RIGHT_KEY, ROTATE_CLOCKWISE, ROTATE_COUNTERCLOCKWISE, DROP, KEYS_SIZE};
 private:
-    static constexpr char tetrominoFigure = (char) 256;
+    static constexpr char tetrominoFigure = (char) 254;
     int numBoard, initialX, initialY = 20;
     int startBoard;
     int logicBoard[cols][rows] = {};
@@ -21,14 +21,12 @@ private:
 public:
 
 
-    int getLogicVal(int x,int y) { return logicBoard[x][y]; }
-    int setLogicVal(int x,int y,int val) {  logicBoard[x][y] = val; }
-
+    int getLogicVal(int row,int col) { return logicBoard[row][col]; }
+    void setLogicVal(int row,int col,int val) {  logicBoard[row][col] = val; }
     void setEmpty();
     static const char getTetrominoFigure();
     void setArrowKeys(char keys[KEYS_SIZE+1]);
     int getDirection(char key)const;
-//    void setDirection(int dir) { direction = dir; }
     bool isGameOver()const;
     bool isFreeBlock(int tX, int tY)const {return(this->logicBoard[tX][tY] == POS_FREE);}
     void deletePossibleLines();
@@ -46,12 +44,7 @@ public:
     static const int getRows() {return rows;}
     void resetBoardPosition(int i, int j);
     void setBoardPosition(int i1,int j1);
-
     int FindPosScore();
     void FindBestPos();
-    int* GetRowGates(int row);
-
-
 };
-
 #endif //TETRIS_BOARD_H

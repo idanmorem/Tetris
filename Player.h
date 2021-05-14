@@ -9,7 +9,7 @@ protected:
     Tetromino& t;
 public:
     Player(Board& board, Tetromino& t) : board(board), t(t) {}
-    virtual int makeTurn()  = 0;
+    virtual void makeTurn()  = 0;
 };
 
 #endif //TETRIS_PLAYER_H

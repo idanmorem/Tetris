@@ -92,8 +92,6 @@ void Board::clearLine(int line) const
     Sleep(300);
 }
 
-
-
 // drawing the limits of both player's boards
 void Board::drawBoardLimits() const
 {
@@ -126,43 +124,51 @@ void Board::setBoardPosition(int i1,int j1) {
 // return the score that the last turn gain
 int Board::FindPosScore() {
 
+    int level ;
     int y, x = 0,counter = 0;
-    for (y = 0; y < getRows(); y++) {
-        while (x < getCols()) {
+    for (y = 1 ; y < rows; y++) {
+        while (x < cols ) {
             if (logicBoard[x][y] != POS_FILLED)
                 break;
             x++;
         }
-        if (x == getCols())
+        if (x == rows)
+        {
+            level = rows-y-1;
             counter++;
+        }
+
     }
+
     switch (counter) {
+        case (0):
+            return 0;
         case (1):
-            return (y + 1) * 40;
+            return (level + 1) * 40 ; // + num of squares we were field
         case (2):
-            return (y + 1) * 100;
+            return (level + 1) * 100;
         case (3):
-            return (y + 1) * 300;
+            return (level + 1) * 300;
         case (4):
-            return (y + 1) * 1200;
+            return (level + 1) * 1200;
         default:
-            return -1;
+            return 0;
     }
 }
 
-// dont forget to free in the next function
-int* Board::GetRowGates(int row)
-{
-    int* res = new int[12];
-    int counter = 0;
-    for( int x = 11 ; x <= 0  ; x--)
-    {
-        if(logicBoard[x][row] == POS_FILLED)
-            res[x] = ++counter;
-        else{
-            counter = 0;
-            res[x] = counter;
-        }
-    }
-    return res;
-}
+//// dont forget to free in the next function
+//int* Board::GetRowGates(int row)
+//{
+//    int* res = new int[12];
+//    int counter = 0;
+//    for( int x = 11 ; x <= 0  ; x--)
+//    {
+//        if(logicBoard[x][row] == POS_FILLED)
+//            res[x] = ++counter;
+//        else{
+//            counter = 0;
+//            res[x] = counter;
+//        }
+//    }
+//    return res;
+//}

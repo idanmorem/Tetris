@@ -16,12 +16,12 @@ class Tetromino{
     int piece = 0, rotation = 0;
     int xPos = 0, yPos = 0;
     int currX[NUMOFBLOCKS] = {}, currY[NUMOFBLOCKS] = {}; // saving the (x,y) of every new block piece (4 overall)
-    int best_x = 0, best_y = 0, best_r = 0;
+    int best_x = 0, best_r = 0;
 protected:
     const int numBoard;
     char figure;
     Board &board;
-    int xOffset = 0, yOffset = 0;
+    int xOffset = 4, yOffset = 0;
 public:
     Tetromino(int numBoard, char figure, Board& board) : numBoard(numBoard), figure(figure), board(board) {}
     virtual void draw();
@@ -40,7 +40,7 @@ public:
     void clearTetromino();
     virtual int getOffsetY() const { return yOffset; }
     virtual int getOffsetX() const { return xOffset; }
-    void initOffsetX() { xOffset = 0; }
+    void initOffsetX() { xOffset = 4; }
     void initOffsetY() { yOffset = 0; }
     char getFigure() const { return figure; }
     void move(int dir);
@@ -51,10 +51,12 @@ public:
     void init(int kind, int rotation);
     void keyboardHit(int dir);
     virtual const int getNumBoard() const;
-    bool isPossible(int pivX, int pivY, int pPiece, int pRotation)const;
-    void storePiece(int pivX, int pivY, int pPiece, int pRotation);
+    virtual bool isPossible(int pivX, int pivY, int pPiece, int pRotation)const;
+    int storePiece(int pivX, int pivY, int pPiece, int pRotation);
     void FindBestPos();
-    bool isPossiblePath(int px,int py,int pr);
     void deletePiece(int pivX, int pivY, int pPiece, int pRotation);
+    void setFigure(char figure);
+    void moveWiseStep();
+    void moveRandomStep();
 };
 #endif //TETRIS_TETROMINO_H

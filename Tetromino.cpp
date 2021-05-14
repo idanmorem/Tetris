@@ -262,8 +262,6 @@ void Tetromino::draw()
         for (int j = 0; j < XRANGE; j++)
         {
             if(mTetrominoes[piece][rotation][i][j] != 0) {
-//                if (j > this->xOffset)
-//                    this->xOffset++; // updates the offset to prevent crashing borders
                 gotoxy(board.getInitialX() + getXInitPos(piece, rotation) + j + this->xOffset, board.getInitialY() + getYInitPos(piece, rotation) + i + this->yOffset);
                 std::cout << figure;
                 this->currX[k] = board.getInitialX() + getXInitPos(piece, rotation) + j + this->xOffset; // saves the block x
@@ -325,7 +323,7 @@ int Tetromino::getYInitPos(int tPiece, int tRotation)const
 // moves the tetromino down the board return true if the piece is stored
 bool Tetromino::down()
 {
-    if(getOffsetY() < board.getRows()-1)
+    if(getOffsetY() < Board::getRows()-1)
     {
         if (!isPossible(getXlogicCoord(getOffsetX()),getOffsetY() + 1, getBlockType(), getBlockRotation()))
         {
@@ -333,6 +331,7 @@ bool Tetromino::down()
             initOffsetX();
             initOffsetY();
             //draws a new random tetromino
+            //TODO: here handle whether to draw a tetromino or bomb
             draw();
             return true;
         } else {
@@ -348,6 +347,7 @@ bool Tetromino::down()
         //draws a new random tetromino
         initOffsetX();
         initOffsetY();
+        //TODO: here handle whether to draw a tetromino or bomb
         draw();
         return true;
     }
@@ -427,6 +427,7 @@ const int Tetromino::getNumBoard() const {
     return numBoard;
 }
 
+// TODO : NEED TO ADD CHECKING OF X BORDERS
 bool Tetromino::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
 {
     // This is just to check the 4x4 blocks of a piece with the appropriate area in the board
@@ -444,25 +445,27 @@ bool Tetromino::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
     return true;
 }
 
-void Tetromino::storePiece(int pivX, int pivY, int pPiece, int pRotation)
+int Tetromino::storePiece(int pivX, int pivY, int pPiece, int pRotation)
 {
     int counter = 0;
-    for (int i1=pivX,i2 = 0; i1 < pivX+ NUMOFBLOCKS ;i1++,i2++)
-    {
-        for (int j1 = pivY-MATRIX_Y_OFFSET,j2 = 0; j1 < (pivY-MATRIX_Y_OFFSET) +NUMOFBLOCKS; j1++,j2++)
-        {
-            if(j1 >= 0)
-            {
-                if ( getSquareType(pPiece, pRotation,j2,i2) != 0 )
-                {
+    int bottomLineCounter = 0;
+
+    for (int i1=pivX,i2 = 0; i1 < pivX+ NUMOFBLOCKS ;i1++,i2++) {
+        for (int j1 = pivY-MATRIX_Y_OFFSET,j2 = 0; j1 < (pivY-MATRIX_Y_OFFSET) +NUMOFBLOCKS; j1++,j2++) {
+            if(j1 >= 0){
+                if ( getSquareType(pPiece, pRotation,j2,i2) != 0 ){
+                    if(j1 == pivY)
+                        bottomLineCounter++;
+
                     board.setBoardPosition(i1, j1);
                     counter++;
                 }
                 if(counter == NUMOFBLOCKS)
-                    return;
+                    return bottomLineCounter;
             }
         }
     }
+    return -1;
 }
 
 void Tetromino::deletePiece(int pivX, int pivY, int pPiece, int pRotation)
@@ -486,35 +489,85 @@ void Tetromino::deletePiece(int pivX, int pivY, int pPiece, int pRotation)
     }
 }
 
+// TODO : ADD 1 point for each block you store in the 1 line so in case we dont complete any line we will have point to go to
 // find the best final position of the specific Tetromino in his board ( the final position that gaines the biggest score value )
 void Tetromino::FindBestPos()
 {
-    int max_score = 0,score = 0;
+    int max_score = 0,score = 0, bottom_squars = 0;
 
-    // Set the Tetromino in every final possible position and check which is the best final position
-    for(int x = 0; x <  Board::cols ; x++) {
-        for(int y = 0; y < Board::rows ; y++) {
-            for( int r = 0  ; r < ROTATION ; r++ ) { // check all the possible rotations
-                if ( isPossible(x,y,piece,r) ) {
-                    storePiece(x, y, piece, r);     // set only for check the value of score
-                    score = board.FindPosScore();   // get the score gained in the last set of tetromino
-                    if (score >= max_score) {       // if it is the max score so save the position
+
+    for(int y = Board::rows ; y >= 1  ; y--)
+    {
+        for(int x = 0; x < Board::cols ; x++)             // run over Board columns
+        {
+            for( int r = 0  ; r < ROTATION ; r++ )       // check all the possible rotations
+            {
+
+                if ( isPossible(x,y,piece,r) )
+                {
+                    bottom_squars = storePiece(x, y, piece, r);      // set only for check the value of score
+                    score = board.FindPosScore() + bottom_squars;   // get the score gained in the last set of Tetromino
+
+                    // if it is the max score so save the position
+                    if (score >= max_score)
+                    {
                         best_x = x;
-                        best_y = y;
                         best_r = r;
                         max_score = score;
                     }
-                    deletePiece(x, y, piece, r);    // after we check the score, delete the piece from the last position so we can check the next position score
+                    deletePiece(x, y, piece, r);    // after we check the score, delete the piece from the last position so we can check the next position
                 }
             }
         }
     }
 }
 
-bool Tetromino::isPossiblePath(int px,int py,int pr)
+void Tetromino::setFigure(char figure) {
+    Tetromino::figure = figure;
+}
+
+//  Tetromino move Wisely towards the best possible position
+void Tetromino::moveWiseStep()
 {
-    // try to move up
-    // if it's not possible reverse and try to
-    // check in the above lines gates what is the lin
-    return false;
+    if (rotation < best_r) {                     // rotate clock wise
+        rotation = (rotation+1)%ROTATION;
+        rotate(1);
+    }
+    else if (xPos > best_x) {                    // move left
+        --xPos;
+        moveLeftRight(-1);
+    }
+    else if (xPos < best_x ) {                   // move right
+        ++xPos;
+        moveLeftRight(1);
+    }
+    else if (xPos == best_x && rotation == best_r) {
+        dropIt();                                // drop Tetromino
+    }
+    down();
+    Sleep(700);
+}
+
+void Tetromino::moveRandomStep()
+{
+    int randKey = rand()%5 + 1;
+    switch (randKey)
+    {
+        case 1 :
+            --xPos;
+            moveLeftRight(-1);
+        case 2 :
+            ++xPos;
+            moveLeftRight(1);
+        case 3 :
+            ++rotation;
+            rotate(1);
+        case 4 :
+            --rotation;
+            rotate(-1);
+        case 5 :
+            dropIt();
+        default :
+            break;
+    }
 }
