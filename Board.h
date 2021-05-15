@@ -19,8 +19,7 @@ private:
     void deleteLine(int tY);
     char arrowKeys[KEYS_SIZE];
 public:
-
-
+    int lineCounter(int row);
     int getLogicVal(int row,int col) { return logicBoard[row][col]; }
     void setLogicVal(int row,int col,int val) {  logicBoard[row][col] = val; }
     void setEmpty();

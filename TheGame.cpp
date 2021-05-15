@@ -98,7 +98,7 @@ void TheGame::exitGame()
     clearScreen();
     std::cout << "Thank you!" << std::endl;
     while(!_getch())
-        Sleep(20);
+        Sleep(200);
 }
 
 //resume paused game
@@ -173,7 +173,7 @@ void TheGame::run()
     t1.init(random(PIECES_KINDS), random(ROTATION));
     t0.draw();
     t1.draw();
-    Sleep(2000); //TEST
+    Sleep(300); //TEST
     gameLoop();
     paused = !over;   // set "paused" val according to current game status
 }

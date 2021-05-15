@@ -14,7 +14,7 @@
 
 class Tetromino{
     int piece = 0, rotation = 0;
-    int xPos = 0, yPos = 0;
+//    int xPos = 0, yPos = 0;
     int currX[NUMOFBLOCKS] = {}, currY[NUMOFBLOCKS] = {}; // saving the (x,y) of every new block piece (4 overall)
     int best_x = 0, best_r = 0;
 protected:
@@ -47,12 +47,11 @@ public:
     void moveLeftRight(int newOffset);
     void rotate(int newOffset);
     void dropIt();
-    int getXlogicCoord(int console_x_offset) const;
     void init(int kind, int rotation);
     void keyboardHit(int dir);
     virtual const int getNumBoard() const;
     virtual bool isPossible(int pivX, int pivY, int pPiece, int pRotation)const;
-    int storePiece(int pivX, int pivY, int pPiece, int pRotation);
+    void storePiece(int pivX, int pivY, int pPiece, int pRotation);
     void FindBestPos();
     void deletePiece(int pivX, int pivY, int pPiece, int pRotation);
     void setFigure(char figure);

@@ -4,7 +4,6 @@
 #include "Board.h"
 #include "IO.h"
 
-
 int HumanPlayer::makeTurn()
 {
     while (true) {

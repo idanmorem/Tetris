@@ -10,9 +10,35 @@ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
 IO.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
 
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.cpp
+Bomb.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
+Tetromino.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.cpp
+ComputerPlayer.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
+TheGame.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
+
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
 Player.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.cpp
+HumanPlayer.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
+TheGame.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
+Tetromino.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
+Board.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+IO.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
 
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
 Player.h
@@ -28,9 +54,19 @@ process.h
 conio.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/conio.h
 
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.cpp
+Player.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
+
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
 Tetromino.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.cpp
+Tetromino.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
+TheGame.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
 IO.h
@@ -61,4 +97,8 @@ cstdlib
 -
 string
 -
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/main.cpp
+TheGame.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 
