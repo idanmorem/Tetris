@@ -55,7 +55,7 @@ void Bomb::findBestBombPos()
     {
         for(j = 0; j < Board::getCols(); j++)
         {
-            if(board.getLogicVal(i, j) && counter < Board::getCols()) {
+            if(!board.getLogicVal(i, j) && counter < Board::getCols()) {
                 found = true;
                 counter++;
                 blockHit = checkHowManyBombed(i - 1, j);

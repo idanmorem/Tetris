@@ -25,8 +25,15 @@ bool ComputerPlayer::isWiseMove() const {
 
 
 
-void ComputerPlayer::makeTurn() {
-
+int ComputerPlayer::makeTurn() {
+    int key = 0;
+    if(_kbhit()) {
+        key = _getch();
+        TheGame::clearKeyboardBuffer();
+        if (key == TheGame::ESC) {
+            return -1;
+        }
+    }
     if (t.getOffsetX() == 4 && t.getOffsetY() == 0){         // if Tetromino is at his starting position
         setWise(isWiseMove());                         // check if the next move is wiseMove
         if(wise)                                            // if it wise move, find(and set) the best position and rotation for the Tetromino
@@ -36,10 +43,6 @@ void ComputerPlayer::makeTurn() {
         t.moveWiseStep();
     else
         t.moveRandomStep();
+
+    return 0;
 }
-
-
-
-
-
-

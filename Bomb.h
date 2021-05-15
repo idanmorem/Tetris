@@ -22,7 +22,7 @@ public:
     void findBestBombPos();
     int checkHowManyBombed(int row, int col) const;
     bool checkBombPath(int x, int y);
-    bool isPossible(int pivX, int pivY)const ;
+//    bool isPossible(int pivX, int pivY)const ;
 };
 
 #endif //TETRIS_BOMB_H

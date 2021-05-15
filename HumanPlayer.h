@@ -6,8 +6,8 @@
 class HumanPlayer: public Player {
 public:
     using Player::Player; // use the ctor of the base, as is
-    void makeTurn() override; // we override the virtual function of the base
-    void WaitForInput();
+    int makeTurn() override; // we override the virtual function of the base
+//    void WaitForInput();
 };
 
 

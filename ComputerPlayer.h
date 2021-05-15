@@ -8,9 +8,7 @@ class ComputerPlayer: public Player {
     bool wise = true;
 public:
     using Player::Player; // use the ctor of the base, as is
-    void makeTurn() override; // we override the virtual function of the base
-
-
+    int makeTurn() override; // we override the virtual function of the base
     bool isWiseMove() const;
     bool isWise() const {return wise;}
     void setWise(bool _wise) { wise = _wise;}

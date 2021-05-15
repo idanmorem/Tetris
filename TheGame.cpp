@@ -113,7 +113,7 @@ void TheGame::resume()
 }
 
 // generic random function return number between 0 to the parameter "compare"
-int TheGame::random(int limit) const
+int TheGame::random(int limit)
 {
     return (rand() % limit);
 }
@@ -240,8 +240,15 @@ void TheGame::printInstructions() const
 // the main game loop that keeps on until the game is finished
 void TheGame::gameLoop() {
     while (true) {
-        players[0]->makeTurn();
-        players[1]->makeTurn();
+        if(players[0]->makeTurn() == -1) {
+            setPaused(true);
+            break;
+        }
+
+        if(players[1]->makeTurn() == -1) {
+            setPaused(true);
+            break;
+        }
         if (checkGameStatus())
             return;
     }
@@ -280,4 +287,8 @@ void TheGame::printTie()
     fflush(NULL);
     junk = _getch();
     //    Sleep(500);
+}
+
+void TheGame::setPaused(bool paused) {
+    TheGame::paused = paused;
 }

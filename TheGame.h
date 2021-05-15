@@ -25,6 +25,10 @@ class TheGame{
 
     Player* players[PLAYERS] = {&c0,&c1};
     bool paused = false;
+public:
+    void setPaused(bool paused);
+
+private:
     int over = 0;
     char type = 0;
     bool drop[2] = {false,false};
@@ -46,7 +50,7 @@ public:
     static constexpr char exit = '9';
     enum {ESC = 27};
     enum {CONTINUE, PLAYER0, PLAYER1, TIE};
-    int random(int limit) const;
+    static int random(int limit);
     void run();
     void gameLoop();
     static void clearKeyboardBuffer();
