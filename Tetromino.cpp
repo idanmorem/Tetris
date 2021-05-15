@@ -323,10 +323,10 @@ bool Tetromino::down()
 {
     if(getOffsetY() < Board::getRows()-1)
     {
-        if (!isPossible(getOffsetX(),getOffsetY() + 1, getBlockType(), getBlockRotation()))
+        if (!isPossible(0,1,0))
         {
             storePiece(getOffsetX(), getOffsetY(), getBlockType(), getBlockRotation());
-            return true;
+            return true; // if stored
         } else {
             clearTetromino();
             yOffset++;
@@ -337,7 +337,7 @@ bool Tetromino::down()
     else
     {
         storePiece(getOffsetX(),getOffsetY(), getBlockType(),getBlockRotation());
-        return true;
+        return true; //if stored
     }
 }
 
@@ -346,41 +346,40 @@ void Tetromino::move(int dir)
     switch (dir) {
         case Board::LEFT_KEY :
             moveLeftRight(-1);
-            if(down())
-            {
-                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-                draw();
-            }
+//            if(down())
+//            {
+//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//                draw();
+//            }
             break;
         case Board::RIGHT_KEY :
             moveLeftRight(1);
-            if(down())
-            {
-                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-                draw();
-            }
+//            if(down())
+//            {
+//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//                draw();
+//            }
             break;
         case Board::ROTATE_CLOCKWISE :
             rotate(1);
-            if(down())
-            {
-                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-                draw();
-            }
+//            if(down())
+//            {
+//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//                draw();
+//            }
             break;
         case Board::ROTATE_COUNTERCLOCKWISE:
             rotate(-1);
-            if(down())
-            {
-                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-                draw();
-            }
+//            if(down())
+//            {
+//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//                draw();
+//            }
             break;
         case Board::DROP:
             dropIt();
-            //TODO: here handle whether to draw a tetromino or bomb
-            init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-            draw();
+//            init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//            draw();
             break;
     }
 }
@@ -388,9 +387,7 @@ void Tetromino::move(int dir)
 void Tetromino::moveLeftRight(int newOffset) {
     if (getLeftmostX() > (board.getInitialX())) {
         if(getRightmostX() < (board.getInitialX() + Board::cols)) {
-//            if (isPossible(getXlogicCoord(getOffsetX()) + newOffset, getOffsetY(), getBlockType(),
-//                           getBlockRotation())) {
-            if (isPossible(xOffset + newOffset, yOffset, piece,rotation)) {
+            if (isPossible(newOffset, 0, 0)) {
                 xOffset += newOffset;
                 clearTetromino();
                 draw();
@@ -400,7 +397,7 @@ void Tetromino::moveLeftRight(int newOffset) {
 }
 
 void Tetromino::rotate(int newOffset) {
-    if(isPossible(getOffsetX(), getOffsetY(), getBlockType(), (getBlockRotation() + newOffset) % ROTATION)) {
+    if(isPossible(0, 0, newOffset)) {
         rotation = (rotation + newOffset) % ROTATION;
         clearTetromino();
         draw();
@@ -419,25 +416,35 @@ void Tetromino::init(int kind, int rotate) {
     setRotation(rotate);
 }
 
-void Tetromino::keyboardHit(int dir)
-{
-    move(dir);
-    board.deletePossibleLines();
-}
+//void Tetromino::keyboardHit(int dir)
+//{
+//    move(dir);
+//    if(down())
+//    {
+//        if(TheGame::random(20) == 0)
+//        {
+//
+//        }
+//        init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//        draw();
+//        board.deletePossibleLines();
+//    }
+//
+//}
+//
+//const int Tetromino::getNumBoard() const {
+//    return numBoard;
+//}
 
-const int Tetromino::getNumBoard() const {
-    return numBoard;
-}
-
-bool Tetromino::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
+bool Tetromino::isPossible(int newXoffset, int newYoffset, int newRotateOffset)const
 {
     // This is just to check the 4x4 blocks of a piece with the appropriate area in the board
-    for (int i1 = pivX, i2 = 0; i1 < pivX + NUMOFBLOCKS; i1++, i2++)
+    for (int i1 = xOffset + newXoffset, i2 = 0; i1 < xOffset + newXoffset + NUMOFBLOCKS; i1++, i2++)
     {
-        for (int j1 = pivY - MATRIX_Y_OFFSET, j2 = 0; j1 < (pivY - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
+        for (int j1 = yOffset + newYoffset - MATRIX_Y_OFFSET, j2 = 0; j1 < (yOffset + newYoffset - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
         {
             if(j1 >= 0)
-                if ((getSquareType(pPiece, pRotation,j2,i2) != 0)  && !board.isFreeBlock(i1,j1) )
+                if ((getSquareType(piece, (rotation + newRotateOffset) % ROTATION,j2,i2) != 0)  && !board.isFreeBlock(i1,j1) )
                     return false;
             // Check if the piece have collision with a block already stored in the map
         }
@@ -495,7 +502,8 @@ void Tetromino::FindBestPos()
         {
             for (int r = 0; r < ROTATION; r++)// check all the possible rotations
             {
-                if (isPossible(x, y, piece, r)) {
+                //TODO:check with snir for OK
+                if (isPossible(0, 0, 0)) {
                     line_before = board.lineCounter(y);
                     storePiece(x, y, piece, r);
                     if (board.lineCounter(y) == 12 || board.lineCounter(y - 1) == 12) {
@@ -521,9 +529,9 @@ void Tetromino::FindBestPos()
     }
 }
 
-void Tetromino::setFigure(char figure) {
-    Tetromino::figure = figure;
-}
+//void Tetromino::setFigure(char figure) {
+//    Tetromino::figure = figure;
+//}
 
 //  Tetromino move Wisely towards the best possible position
 void Tetromino::moveWiseStep()
@@ -557,7 +565,7 @@ void Tetromino::moveWiseStep()
         init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
         draw();// drop Tetromino
     }
-    Sleep(300);
+    Sleep(200);
 }
 
 void Tetromino::moveRandomStep()

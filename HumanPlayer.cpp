@@ -6,9 +6,10 @@
 
 int HumanPlayer::makeTurn()
 {
+    stored = false;
     while (true) {
         int key = 0, dir = {Board::KEYS_SIZE};
-        while(dir == Board::KEYS_SIZE )
+        while(true)
         {
             if(_kbhit()) {
                 key = _getch();
@@ -17,16 +18,30 @@ int HumanPlayer::makeTurn()
                     return -1;
                 }
                 if ((dir = board.getDirection(key)) != -1) {
-                    t.keyboardHit(dir);
-                    return 0;
+                    if(!bombInHand) {
+                        t.move(dir);
+                        if(t.down()) {
+                            stored = true;
+                        }
+                        return 0;
+                    }
+                    else
+                    {
+                        b.move(dir);
+                        if(b.down()) {
+                            stored = true;
+                            bombInHand = false;
+                        }
+                        return 0;
+                    }
                 }
             }
-            else
-            {
+            if(!bombInHand)
                 t.down();
+            else
+                b.down();
                 Sleep(1000);
                 return 0;
-            }
         }
     }
 }

@@ -12,6 +12,7 @@ public:
     bool isWiseMove() const;
     bool isWise() const {return wise;}
     void setWise(bool _wise) { wise = _wise;}
+    void setLevel(char _level) {level = _level;}
 };
 
 #endif //TETRIS_COMPUTERPLAYER_H

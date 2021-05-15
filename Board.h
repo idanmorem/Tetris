@@ -43,7 +43,5 @@ public:
     static const int getRows() {return rows;}
     void resetBoardPosition(int i, int j);
     void setBoardPosition(int i1,int j1);
-    int FindPosScore();
-    void FindBestPos();
 };
 #endif //TETRIS_BOARD_H

@@ -112,6 +112,12 @@
 		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h">
 			<Option target="Tetris"/>
 		</Unit>
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.cpp">
+			<Option target="Tetris"/>
+		</Unit>
+		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h">
+			<Option target="Tetris"/>
+		</Unit>
 		<Unit filename="C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.cpp">
 			<Option target="Tetris"/>
 		</Unit>

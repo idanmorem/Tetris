@@ -39,10 +39,10 @@ void Bomb::setCurrY(int curr)
 //draws a bomb
 void Bomb::draw()
 {
-    gotoxy(board.getInitialX() + getCurrX() + this->xOffset, board.getInitialY() + getCurrY() + this->yOffset);
+    gotoxy(board.getInitialX() + this->xOffset, board.getInitialY() + this->yOffset);
     std::cout << figure;
-    this->currX = board.getInitialX() + getCurrX() + this->xOffset; // saves the block x
-    this->currY = board.getInitialY() + getCurrY() + this->yOffset;// saves the block y
+    this->currX = board.getInitialX() + this->xOffset; // saves the block x
+    this->currY = board.getInitialY() + this->yOffset;// saves the block y
 }
 
 void Bomb::findBestBombPos()
@@ -136,4 +136,78 @@ int Bomb::getBestY() const {
 
 void Bomb::setBestY(int bestY) {
     Bomb::bestY = bestY;
+}
+
+void Bomb::move(int dir)
+{
+    switch (dir) {
+        case Board::LEFT_KEY :
+            moveLeftRight(-1);
+//            if(down())
+//            {
+//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//                draw();
+//            }
+            break;
+        case Board::RIGHT_KEY :
+            moveLeftRight(1);
+//            if(down())
+//            {
+//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//                draw();
+//            }
+            break;
+        case Board::DROP:
+            dropIt();
+//            init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+//            draw();
+            break;
+    }
+}
+
+void Bomb::moveLeftRight(int newOffset) {
+    if (getCurrX() > (board.getInitialX())) {
+        if(getCurrX() < (board.getInitialX() + Board::cols)) {
+//            if (isPossible(getXlogicCoord(getOffsetX()) + newOffset, getOffsetY(), getBlockType(),
+//                           getBlockRotation())) {
+            if (!board.getLogicVal(getCurrX() + newOffset, getCurrY())) {
+                xOffset += newOffset;
+                clearTetromino();
+                draw();
+            }
+        }
+    }
+}
+
+//deletes the tetromino last position
+void Bomb::clearTetromino()
+{
+        gotoxy(getCurrX(), getCurrY());
+        std::cout << ' ';
+}
+
+bool Bomb::down()
+{
+    if(getOffsetY() < Board::getRows()-1)
+    {
+        if(!board.isFreeBlock(xOffset, yOffset+1)) //TODO: double check
+        {
+//            activateBomb();
+            return true;
+        } else {
+            clearTetromino();
+            yOffset++;
+            draw();
+            return false;
+        }
+    }
+    else {
+//        activateBomb();
+        return true; //if stored
+    }
+}
+
+void Bomb::dropIt() {
+    while(!down())
+        Sleep(1);
 }

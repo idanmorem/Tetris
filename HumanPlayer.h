@@ -10,5 +10,4 @@ public:
 //    void WaitForInput();
 };
 
-
 #endif //TETRIS_HUMANPLAYER_H

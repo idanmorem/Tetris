@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Tetris.dir/ComputerPlayer.cpp.obj"
   "CMakeFiles/Tetris.dir/HumanPlayer.cpp.obj"
   "CMakeFiles/Tetris.dir/IO.cpp.obj"
+  "CMakeFiles/Tetris.dir/Menu.cpp.obj"
   "CMakeFiles/Tetris.dir/Player.cpp.obj"
   "CMakeFiles/Tetris.dir/Tetromino.cpp.obj"
   "CMakeFiles/Tetris.dir/TheGame.cpp.obj"

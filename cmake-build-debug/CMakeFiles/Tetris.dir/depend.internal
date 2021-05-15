@@ -13,54 +13,76 @@ CMakeFiles/Tetris.dir/Bomb.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
 CMakeFiles/Tetris.dir/ComputerPlayer.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.cpp
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 CMakeFiles/Tetris.dir/HumanPlayer.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.cpp
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 CMakeFiles/Tetris.dir/IO.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.cpp
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+CMakeFiles/Tetris.dir/Menu.cpp.obj
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.cpp
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 CMakeFiles/Tetris.dir/Player.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.cpp
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
 CMakeFiles/Tetris.dir/Tetromino.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.cpp
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 CMakeFiles/Tetris.dir/TheGame.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.cpp
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
 CMakeFiles/Tetris.dir/main.cpp.obj
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/ComputerPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
  C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h

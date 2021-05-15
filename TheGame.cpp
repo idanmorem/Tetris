@@ -11,13 +11,19 @@ void TheGame::init()
         board[i].setInitialX(20+i*33);
         board[i].setStartBoard(board[i].getInitialX()+4);
     }
-    menu();
+    activate();
 }
 
 //start new game
-void TheGame::startNew()
+void TheGame::startNew(char type)
 {
+    char lvl;
     over = false;
+    if( type != newGameHvsH )
+    {
+        Menu::printRequestPcLevel();
+        lvl = (char)_getch();
+    }
     clearScreen();
     for(int i = 0; i < PLAYERS; i++) {
         board[i].drawBoardLimits();
@@ -44,41 +50,32 @@ void TheGame::startNew()
 }
 
 //main menu of the game
-void TheGame::menu() {
+void TheGame::activate() {
     clearScreen();
-    printMenu();
-    char act = (char)getchar(); //TEST ONLY
-//    char act = (char)_getch();
-    char lvl = 0;
+    Menu::printMenu(paused);
+    char act = (char)getchar();
     while ( act != exit) {
         switch (act) {
             case newGameHvsH :            // start new game Human vs Human
-                setType(newGameHvsH);
-                startNew();
+                startNew(newGameHvsH);
                 break;
             case newGameHvsC :            // start new game Human vs Computer
-                setType(newGameHvsC);
-                std::cout << " Please enter Computer game level \n(a) - Best\n(b) - Good\n(c) - Novice"<< std::endl;
-                startNew();
+                startNew(newGameHvsC);
                 break;
             case newGameCvsC :            // start new game  Computer vs Computer
-                setType(newGameCvsC);
-                std::cout << " Please enter Computer game level \n(a) - Best\n(b) - Good\n(c) - Novice"<< std::endl;
-                startNew();
+                startNew(newGameCvsC);
                 break;
             case continueGame :            // continue paused game
                 if (paused)
                     resume();
                 break;
             case keysInstructions :
-                printInstructions();        // print keys and instructions
+                Menu::printInstructions();        // print keys and instructions
                 waitForKey(ESC);
-                break;
-            default:
                 break;
         }
         clearScreen();
-        printMenu();
+        Menu::printMenu(paused);
         act = (char)_getch();
     }
     exitGame();
@@ -118,80 +115,19 @@ int TheGame::random(int limit)
     return (rand() % limit);
 }
 
-/*
-void TheGame::gameLoop()
-{
-    int key = 0, dir = 0;
-    while (!over) {
-        esc_hit = false;
-        //TODO: allow input from both players in a single game clock iteration
-        if(_kbhit()) {
-            key = _getch();
-            clearKeyboardBuffer();
-            if(esc_hit || (key == ESC))
-                return;
-            if ((dir = board[0].getDirection(key)) != -1 && !drop[0])
-                t0.keyboardHit(dir);
-            else if ((dir = board[1].getDirection(key)) != -1 && !drop[1])
-                t1.keyboardHit(dir);
-        }
-        //TODO: try to remove the need for "stored" bool by handling it inside down() function
-        //      the idea is on hit to replace the current tetromino with the next one
-        if(!stored) {
-            if(!drop[1])
-                t0.down();
-            if(!drop[0])
-                t1.down();
-            Sleep(400);
-        }
-        stored = false;
-
-        over = board[0].isGameOver();
-        //TODO: loop for both boards with: if( board[i].isGameOver() ) over += (i+1);
-        //      over would be int indicating: 0) continue 1) player 0 lost, 2) player 1 lost, 3) tie
-        //      check outside the loop the value of "over"
-        board[0].deletePossibleLines();
-        if(over){
-            printGameOver(0);
-            return;
-        }
-        over = board[1].isGameOver();
-        board[1].deletePossibleLines();
-        if(over){
-            printGameOver(1);
-            return;
-        }
-    }
-}
-*/
-
 // run the game by using _kbhit() and _getch()
 void TheGame::run()
 {
     //draws a new random tetromino
-    t0.init(random(PIECES_KINDS), random(ROTATION));
-    t1.init(random(PIECES_KINDS), random(ROTATION));
+    if(!paused) {
+        t0.init(random(PIECES_KINDS), random(ROTATION));
+        t1.init(random(PIECES_KINDS), random(ROTATION));
+    }
     t0.draw();
     t1.draw();
     Sleep(300); //TEST
     gameLoop();
     paused = !over;   // set "paused" val according to current game status
-}
-
-// prints game over depends on the numBoard
-void TheGame::printGameOver(int numBoard)
-{
-    int junk;
-    clearScreen();
-    if (numBoard == 0)
-        std::cout << "Player right won!";
-    else
-        std::cout << "Player left won!";
-    std::cout << '\n';
-    std::cout << "Press any key to continue";
-    fflush(NULL);
-    junk = _getch();
-    //    Sleep(500);
 }
 
 void TheGame::clearKeyboardBuffer()
@@ -207,36 +143,6 @@ void TheGame::clearKeyboardBuffer()
     fflush(NULL);
 }
 
-// prints the menu
-void TheGame::printMenu() const
-{
-    cout << "Tetris - Main Menu:\n";
-    cout << "(1) Start a new - game Human vs Human\n";
-    cout << "(2) Start a new - game Human vs Computer\n";
-    cout << "(3) Start a new - game Computer vs Computer\n";
-    if (paused)
-        cout << "(4) Continue a paused game\n";
-    cout << "(8) Present instructions and keys\n";
-    cout <<"(9) EXIT" << endl;
-}
-
-//prints the instructions
-void TheGame::printInstructions() const
-{
-    cout
-            << "Each player can move the pieces to the: left / right / down or to rotate the pieces in clockwise direction or counterclockwise direction:\ngame is over if your pieces reach the top of the screen, and you can only remove pieces from the screen by filling all the blank space in a line. "
-            << endl;
-    cout << "Keys:\n"
-            "                               Left Player                Right Player\n"
-            "LEFT:                            a or A                     j or J\n"
-            "RIGHT:                           d or D                     l (small L) or L\n"
-            "ROTATE clockwise:                s or S                     k or K\n"
-            "ROTATE counterclockwise:         w or W                     i or I (uppercase i)\n"
-            "DROP:                            x or X                     m or M\n" << endl;
-
-    cout << "Please press ESC to return to the main menu" << endl;
-}
-
 // the main game loop that keeps on until the game is finished
 void TheGame::gameLoop() {
     while (true) {
@@ -244,10 +150,46 @@ void TheGame::gameLoop() {
             setPaused(true);
             break;
         }
+        else
+        {
+            //TODO: make a func
+            if(players[0]->isStored())
+            {
+                if(random(20) == 0) {
+                    players[0]->setBombInHand(true);
+                    b0.init(-1, -1);
+                    b0.draw();
+                }
+                else
+                {
+                    t0.init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+                    t0.draw();
+                }
+            }
+                board[0].deletePossibleLines();
+        }
 
-        if(players[1]->makeTurn() == -1) {
+        if(players[0]->makeTurn() == -1) {
             setPaused(true);
             break;
+        }
+        else
+        {
+            //TODO: make a func
+            if(players[1]->isStored())
+            {
+                if(random(20) == 0) {
+                    players[1]->setBombInHand(true);
+                    b1.init(-1, -1);
+                    b1.draw();
+                }
+                else
+                {
+                    t1.init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+                    t1.draw();
+                }
+            }
+            board[1].deletePossibleLines();
         }
         if (checkGameStatus())
             return;
@@ -265,28 +207,16 @@ bool TheGame::checkGameStatus(){
         case CONTINUE:
             return false;
         case PLAYER0:
-            printGameOver(0);
+            Menu::printGameOver(0);
             return true;
         case PLAYER1:
-            printGameOver(1);
+            Menu::printGameOver(1);
             return true;
         case TIE:
-            printTie();
+            Menu::printTie();
             return true;
     }
     return false;
-}
-
-void TheGame::printTie()
-{
-    int junk;
-    clearScreen();
-    std::cout << "We have a tie!";
-    std::cout << '\n';
-    std::cout << "Press any key to continue";
-    fflush(NULL);
-    junk = _getch();
-    //    Sleep(500);
 }
 
 void TheGame::setPaused(bool paused) {

@@ -19,11 +19,10 @@ bool ComputerPlayer::isWiseMove() const {
             else
                 return true;
         }
+        default:
+            return true;
     }
-    return true;
 }
-
-
 
 int ComputerPlayer::makeTurn() {
     int key = 0;

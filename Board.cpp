@@ -121,41 +121,6 @@ void Board::setBoardPosition(int i1,int j1) {
     logicBoard[i1][j1] = POS_FILLED;
 }
 
-// return the score that the last turn gain
-//int Board::FindPosScore() {
-//
-//    int level ;
-//    int y, x = 0,counter = 0;
-//    for (y = 1 ; y < rows; y++) {
-//        while (x < cols ) {
-//            if (logicBoard[x][y] != POS_FILLED)
-//                break;
-//            x++;
-//        }
-//        if (x == rows)
-//        {
-//            level = rows-y-1;
-//            counter++;
-//        }
-//
-//    }
-//
-//    switch (counter) {
-//        case (0):
-//            return 0;
-//        case (1):
-//            return (level + 1) * 40 ; // + num of squares we were field
-//        case (2):
-//            return (level + 1) * 100;
-//        case (3):
-//            return (level + 1) * 300;
-//        case (4):
-//            return (level + 1) * 1200;
-//        default:
-//            return 0;
-//    }
-//}
-
 int Board::lineCounter(int row)
 {
     int i = 0,counter=0;

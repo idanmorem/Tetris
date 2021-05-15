@@ -12,19 +12,23 @@ CMakeFiles\Tetris.dir\Bomb.cpp.obj: ..\IO.h
 CMakeFiles\Tetris.dir\Bomb.cpp.obj: ..\Tetromino.h
 
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\Bomb.h
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\ComputerPlayer.cpp
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\ComputerPlayer.h
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\HumanPlayer.h
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\IO.h
+CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\Menu.h
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\Player.h
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\Tetromino.h
 CMakeFiles\Tetris.dir\ComputerPlayer.cpp.obj: ..\TheGame.h
 
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\Bomb.h
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\ComputerPlayer.h
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\HumanPlayer.cpp
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\HumanPlayer.h
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\IO.h
+CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\Menu.h
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\Player.h
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\Tetromino.h
 CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\TheGame.h
@@ -32,34 +36,52 @@ CMakeFiles\Tetris.dir\HumanPlayer.cpp.obj: ..\TheGame.h
 CMakeFiles\Tetris.dir\IO.cpp.obj: ..\IO.cpp
 CMakeFiles\Tetris.dir\IO.cpp.obj: ..\IO.h
 
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\Bomb.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\ComputerPlayer.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\HumanPlayer.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\IO.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\Menu.cpp
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\Menu.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\Player.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\Tetromino.h
+CMakeFiles\Tetris.dir\Menu.cpp.obj: ..\TheGame.h
+
 CMakeFiles\Tetris.dir\Player.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\Player.cpp.obj: ..\Bomb.h
 CMakeFiles\Tetris.dir\Player.cpp.obj: ..\IO.h
 CMakeFiles\Tetris.dir\Player.cpp.obj: ..\Player.cpp
 CMakeFiles\Tetris.dir\Player.cpp.obj: ..\Player.h
 CMakeFiles\Tetris.dir\Player.cpp.obj: ..\Tetromino.h
 
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\Bomb.h
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\ComputerPlayer.h
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\HumanPlayer.h
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\IO.h
+CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\Menu.h
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\Player.h
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\Tetromino.cpp
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\Tetromino.h
 CMakeFiles\Tetris.dir\Tetromino.cpp.obj: ..\TheGame.h
 
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\Bomb.h
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\ComputerPlayer.h
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\HumanPlayer.h
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\IO.h
+CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\Menu.h
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\Player.h
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\Tetromino.h
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\TheGame.cpp
 CMakeFiles\Tetris.dir\TheGame.cpp.obj: ..\TheGame.h
 
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\Board.h
+CMakeFiles\Tetris.dir\main.cpp.obj: ..\Bomb.h
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\ComputerPlayer.h
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\HumanPlayer.h
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\IO.h
+CMakeFiles\Tetris.dir\main.cpp.obj: ..\Menu.h
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\Player.h
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\Tetromino.h
 CMakeFiles\Tetris.dir\main.cpp.obj: ..\TheGame.h

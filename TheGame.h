@@ -1,7 +1,9 @@
 #ifndef TETRIS_THEGAME_H
 #define TETRIS_THEGAME_H
 
+#include "Menu.h"
 #include "Board.h"
+#include "Bomb.h"
 #include "IO.h"
 #include "Tetromino.h"
 #include "ComputerPlayer.h"
@@ -16,30 +18,22 @@ class TheGame{
     Board board[2];
     Tetromino t0{0, (char)254, board[0]};
     Tetromino t1{1, (char)254, board[1]};
-    // Players - TODO: NEED TO CHECK HOW TO KNOW WHICH PLAYERS TO MAKE
-    ComputerPlayer c0{board[0],t0};
-    ComputerPlayer c1{board[1],t1};
-
-    HumanPlayer h0{board[0],t0};
-    HumanPlayer h1{board[1],t1};
-
+    Bomb b0{0, 'X', board[0]};
+    Bomb b1{1, 'X', board[1]};
+    ComputerPlayer c0{board[0],t0, b0};
+    ComputerPlayer c1{board[1],t1, b1};
+    HumanPlayer h0{board[0],t0, b0};
+    HumanPlayer h1{board[1],t1, b1};
     Player* players[PLAYERS] = {&c0,&c1};
     bool paused = false;
-public:
-    void setPaused(bool paused);
 
-private:
     int over = 0;
-    char type = 0;
+//    char type = 0;
     bool drop[2] = {false,false};
-    void printMenu() const;
-    void printInstructions() const;
-    void startNew();
+    void startNew(char type);
     void resume();
     static void exitGame();
-    void menu();
-    static void printGameOver(int numBoard);
-    static void printTie();
+    void activate();
 
 public:
     static constexpr char newGameHvsH = '1';
@@ -57,8 +51,7 @@ public:
     void waitForKey(char key);
     void init();
     bool checkGameStatus();
-    char getType() const {return type;}
-    void setType(char gameType) { type = gameType; }
+    void setPaused(bool paused);
 };
 
 #endif //TETRIS_THEGAME_H

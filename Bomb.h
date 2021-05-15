@@ -22,7 +22,11 @@ public:
     void findBestBombPos();
     int checkHowManyBombed(int row, int col) const;
     bool checkBombPath(int x, int y);
-//    bool isPossible(int pivX, int pivY)const ;
-};
+    void move(int dir) override;
+    void moveLeftRight(int newOffset) override;
+    void clearTetromino() override;
+    bool down() override;
+    void dropIt() override;
+    };
 
 #endif //TETRIS_BOMB_H
