@@ -120,11 +120,11 @@ void TheGame::run()
 {
     //draws a new random tetromino
     if(!paused) {
-        t0.init(random(PIECES_KINDS), random(ROTATION));
-        t1.init(random(PIECES_KINDS), random(ROTATION));
+        t[0].init(random(PIECES_KINDS), random(ROTATION));
+        t[1].init(random(PIECES_KINDS), random(ROTATION));
     }
-    t0.draw();
-    t1.draw();
+    t[0].draw();
+    t[1].draw();
     Sleep(300); //TEST
     gameLoop();
     paused = !over;   // set "paused" val according to current game status
@@ -146,54 +146,39 @@ void TheGame::clearKeyboardBuffer()
 // the main game loop that keeps on until the game is finished
 void TheGame::gameLoop() {
     while (true) {
-        if(players[0]->makeTurn() == -1) {
-            setPaused(true);
-            break;
-        }
-        else
-        {
-            //TODO: make a func
-            if(players[0]->isStored())
-            {
-                if(random(20) == 0) {
-                    players[0]->setBombInHand(true);
-                    b0.init(-1, -1);
-                    b0.draw();
-                }
-                else
-                {
-                    t0.init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-                    t0.draw();
-                }
-            }
-                board[0].deletePossibleLines();
-        }
-
-        if(players[0]->makeTurn() == -1) {
-            setPaused(true);
-            break;
-        }
-        else
-        {
-            //TODO: make a func
-            if(players[1]->isStored())
-            {
-                if(random(20) == 0) {
-                    players[1]->setBombInHand(true);
-                    b1.init(-1, -1);
-                    b1.draw();
-                }
-                else
-                {
-                    t1.init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-                    t1.draw();
-                }
-            }
-            board[1].deletePossibleLines();
+        for(int i = 0; i < PLAYERS; i++) {
+            if(whichObj(i))
+                break;
         }
         if (checkGameStatus())
             return;
     }
+}
+
+bool TheGame::whichObj(int i)
+{
+    if(players[i]->makeTurn() == -1) {
+        setPaused(true);
+        return true;
+    }
+    else
+    {
+        if(players[i]->isStored())
+        {
+            if(random(20) == 0) {
+                players[i]->setBombInHand(true);
+                b[i].init(-1, -1);
+                b[i].draw();
+            }
+            else
+            {
+                t[i].init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
+                t[i].draw();
+            }
+        }
+        board[i].deletePossibleLines();
+    }
+    return false;
 }
 
 // checks if the game is over/tie/continue
