@@ -1,7 +1,6 @@
 #include "ComputerPlayer.h"
 #include "TheGame.h"
 
-// TODO : ABSORB GAME LEVEL
 // return true if the next move should be a random move
 bool ComputerPlayer::isWiseMove() const {
     switch (level) {

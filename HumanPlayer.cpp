@@ -1,8 +1,5 @@
 #include "HumanPlayer.h"
 #include "TheGame.h"
-#include "Tetromino.h"
-#include "Board.h"
-#include "IO.h"
 
 int HumanPlayer::makeTurn()
 {
@@ -38,8 +35,9 @@ int HumanPlayer::makeTurn()
             }
             if(!bombInHand)
                 t.down();
-            else
+            else if(!b.isActivated())
                 b.down();
+
                 Sleep(1000);
                 return 0;
         }

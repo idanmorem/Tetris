@@ -36,6 +36,10 @@ void Board::updateScreen() const
                 gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
                 cout <<  getTetrominoFigure();
             }
+            else{
+                gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
+                cout <<  ' ';
+            }
         }
     }
 }
@@ -110,7 +114,7 @@ void Board::drawBoardLimits() const
 
 void Board::resetBoardPosition(int i, int j)
 {
-    logicBoard[i][j] = 0;
+    logicBoard[i][j] = POS_FREE;
 }
 
 const char Board::getTetrominoFigure() {

@@ -6,9 +6,17 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.cpp
+Board.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
+
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
 IO.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.cpp
+Bomb.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
 
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Bomb.h
 Tetromino.h
@@ -29,12 +37,6 @@ HumanPlayer.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
 TheGame.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
-Tetromino.h
-C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Tetromino.h
-Board.h
-C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Board.h
-IO.h
-C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/IO.h
 
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/HumanPlayer.h
 Player.h
@@ -57,6 +59,10 @@ C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Menu.h
 TheGame.h
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/TheGame.h
+
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.cpp
+Player.h
+C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
 
 C:/Users/idanm/CLionProjects/CPP/Tetris_git/Tetris/Player.h
 Tetromino.h

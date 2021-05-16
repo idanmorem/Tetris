@@ -13,7 +13,6 @@ public:
 private:
     static constexpr char tetrominoFigure = (char) 254;
     int numBoard, initialX, initialY = 20;
-    int startBoard;
     int logicBoard[cols][rows] = {};
     enum {POS_FREE, POS_FILLED};
     void deleteLine(int tY);
@@ -21,7 +20,6 @@ private:
 public:
     int lineCounter(int row);
     int getLogicVal(int row,int col) { return logicBoard[row][col]; }
-    void setLogicVal(int row,int col,int val) {  logicBoard[row][col] = val; }
     void setEmpty();
     static const char getTetrominoFigure();
     void setArrowKeys(char keys[KEYS_SIZE+1]);
@@ -31,12 +29,9 @@ public:
     void deletePossibleLines();
     void updateScreen() const;
     void clearLine(int line) const;
-    int getNumBoard() const {return numBoard;}
     void setNumBoard(int num) {numBoard = num;}
     int getInitialX() const {return initialX;}
     void setInitialX(int initial) {initialX = initial;}
-    int getStartBoard() const {return startBoard;}
-    void setStartBoard(int start) {startBoard = start;}
     int getInitialY() const {return initialY;}
     void drawBoardLimits() const;
     static const int getCols() {return cols;}

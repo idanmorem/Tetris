@@ -3,27 +3,24 @@
 //after you decide the location this is actual bombing
 void Bomb::activateBomb()
 {
-    for(int i = 0; i < Board::getRows(); i++)
+    for(int y = 0; y < Board::getRows(); y++)
     {
-        for(int j = 0; j < Board::getCols(); j++)
+        for(int x = 0; x < Board::getCols(); x++)
         {
-            if(inBombRadius(i, j))
+            if(inBombRadius(x, y) && board.getLogicVal(x, y))
             {
-                board.resetBoardPosition(i, j);
-                gotoxy(i+board.getInitialX(), j+board.getInitialY());
-                std::cout << ' ';
-//                board.updateScreen();
+                board.resetBoardPosition(x, y);
             }
         }
     }
-    gotoxy(getCurrX(),getCurrY());
-    std::cout << ' ';
+    activated = true;
+    board.updateScreen();
 }
 
 //checks if the current (x,y) is in the bomb's radius so it would delete it
-bool Bomb::inBombRadius(int i, int j) const
+bool Bomb::inBombRadius(int x, int y) const
 {
-    return ((i <= currY-4 || i >= currY+4) && (j <= currX-4 || j >= currY+4));
+    return (((x <= (currX-4)) || (x >= (currX+4))) || ((y <= (currY-4)) || (y >= (currY+4))));
 }
 
 void Bomb::setCurrX(int curr)
@@ -39,9 +36,9 @@ void Bomb::setCurrY(int curr)
 //draws a bomb
 void Bomb::draw()
 {
-    gotoxy(board.getInitialX() + this->xOffset, board.getInitialY() + this->yOffset);
+    gotoxy(board.getInitialX() + this->xOffset + 1, board.getInitialY() + this->yOffset);
     std::cout << figure;
-    this->currX = board.getInitialX() + this->xOffset; // saves the block x
+    this->currX = board.getInitialX() + this->xOffset + 1; // saves the block x
     this->currY = board.getInitialY() + this->yOffset;// saves the block y
 }
 
@@ -49,14 +46,12 @@ void Bomb::findBestBombPos()
 {
     int blockHit, max = 0, counter = 0;
     int best_X, best_Y;
-    bool found = false;
     int i, j;
     for(i = 1; i < Board::getRows(); i++)
     {
         for(j = 0; j < Board::getCols(); j++)
         {
             if(!board.getLogicVal(i, j) && counter < Board::getCols()) {
-                found = true;
                 counter++;
                 blockHit = checkHowManyBombed(i - 1, j);
                 if(checkBombPath(i-1, j))
@@ -143,24 +138,13 @@ void Bomb::move(int dir)
     switch (dir) {
         case Board::LEFT_KEY :
             moveLeftRight(-1);
-//            if(down())
-//            {
-//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//                draw();
-//            }
+
             break;
         case Board::RIGHT_KEY :
             moveLeftRight(1);
-//            if(down())
-//            {
-//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//                draw();
-//            }
             break;
         case Board::DROP:
             dropIt();
-//            init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//            draw();
             break;
     }
 }
@@ -168,8 +152,6 @@ void Bomb::move(int dir)
 void Bomb::moveLeftRight(int newOffset) {
     if (getCurrX() > (board.getInitialX())) {
         if(getCurrX() < (board.getInitialX() + Board::cols)) {
-//            if (isPossible(getXlogicCoord(getOffsetX()) + newOffset, getOffsetY(), getBlockType(),
-//                           getBlockRotation())) {
             if (!board.getLogicVal(getCurrX() + newOffset, getCurrY())) {
                 xOffset += newOffset;
                 clearTetromino();
@@ -190,9 +172,10 @@ bool Bomb::down()
 {
     if(getOffsetY() < Board::getRows()-1)
     {
-        if(!board.isFreeBlock(xOffset, yOffset+1)) //TODO: double check
+        if(!board.isFreeBlock(xOffset, yOffset+1) && !activated)
         {
-//            activateBomb();
+            activateBomb();
+            clearTetromino();
             return true;
         } else {
             clearTetromino();
@@ -202,7 +185,8 @@ bool Bomb::down()
         }
     }
     else {
-//        activateBomb();
+        activateBomb();
+        clearTetromino();
         return true; //if stored
     }
 }
@@ -210,4 +194,8 @@ bool Bomb::down()
 void Bomb::dropIt() {
     while(!down())
         Sleep(1);
+}
+
+bool Bomb::isActivated() const {
+    return activated;
 }

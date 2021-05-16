@@ -17,9 +17,7 @@
 class TheGame{
     Board board[2];
     Tetromino t[2]{{0, (char)254, board[0]}, {1, (char)254, board[1]}};
-//    Tetromino t1{1, (char)254, board[1]};
     Bomb b[2]{{0, 'X', board[0]}, {1, 'X', board[1]}};
-//    Bomb b1{1, 'X', board[1]};
     ComputerPlayer c0{board[0],t[0], b[0]};
     ComputerPlayer c1{board[1],t[1], b[1]};
     HumanPlayer h0{board[0],t[0], b[0]};
@@ -28,7 +26,6 @@ class TheGame{
     bool paused = false;
 
     int over = 0;
-//    char type = 0;
     bool drop[2] = {false,false};
     void startNew(char type);
     void resume();

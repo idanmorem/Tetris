@@ -346,40 +346,18 @@ void Tetromino::move(int dir)
     switch (dir) {
         case Board::LEFT_KEY :
             moveLeftRight(-1);
-//            if(down())
-//            {
-//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//                draw();
-//            }
             break;
         case Board::RIGHT_KEY :
             moveLeftRight(1);
-//            if(down())
-//            {
-//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//                draw();
-//            }
             break;
         case Board::ROTATE_CLOCKWISE :
             rotate(1);
-//            if(down())
-//            {
-//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//                draw();
-//            }
             break;
         case Board::ROTATE_COUNTERCLOCKWISE:
             rotate(-1);
-//            if(down())
-//            {
-//                init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//                draw();
-//            }
             break;
         case Board::DROP:
             dropIt();
-//            init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//            draw();
             break;
     }
 }
@@ -415,26 +393,6 @@ void Tetromino::init(int kind, int rotate) {
     setPiece(kind);
     setRotation(rotate);
 }
-
-//void Tetromino::keyboardHit(int dir)
-//{
-//    move(dir);
-//    if(down())
-//    {
-//        if(TheGame::random(20) == 0)
-//        {
-//
-//        }
-//        init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
-//        draw();
-//        board.deletePossibleLines();
-//    }
-//
-//}
-//
-//const int Tetromino::getNumBoard() const {
-//    return numBoard;
-//}
 
 bool Tetromino::isPossible(int newXoffset, int newYoffset, int newRotateOffset)const
 {
@@ -528,10 +486,6 @@ void Tetromino::FindBestPos()
         }
     }
 }
-
-//void Tetromino::setFigure(char figure) {
-//    Tetromino::figure = figure;
-//}
 
 //  Tetromino move Wisely towards the best possible position
 void Tetromino::moveWiseStep()

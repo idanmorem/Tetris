@@ -9,7 +9,6 @@ void TheGame::init()
         board[i].setNumBoard(i);
         board[i].setArrowKeys(playerKeys[i]);
         board[i].setInitialX(20+i*33);
-        board[i].setStartBoard(board[i].getInitialX()+4);
     }
     activate();
 }
@@ -182,7 +181,8 @@ bool TheGame::whichObj(int i)
 }
 
 // checks if the game is over/tie/continue
-bool TheGame::checkGameStatus(){
+bool TheGame::checkGameStatus()
+{
     for(int i = 0; i < PLAYERS; i++)
     {
         if(board[i].isGameOver())
