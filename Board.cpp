@@ -22,19 +22,19 @@ int Board::getDirection(const char key)const
 // set all board positions to be empty
 void Board::setEmpty()
 {
-    for(int i = 0; i < getCols(); i++)
-        for(int j = 0; j < getRows(); j++)
+    for(int i = 0; i < cols; i++)
+        for(int j = 0; j < rows; j++)
             logicBoard[i][j] = POS_FREE;
 }
 
 // update board game on the screen
 void Board::updateScreen() const
 {
-    for(int ix = 0 ; ix < getCols() ; ix++ ) {
-        for (int iy = 0; iy < getRows(); iy++) {
+    for(int ix = 0 ; ix < cols ; ix++ ) {
+        for (int iy = 0; iy < rows; iy++) {
             if (logicBoard[ix][iy] == POS_FILLED) {
                 gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
-                cout <<  getTetrominoFigure();
+                cout <<  tetrominoFigure;
             }
             else{
                 gotoxy(getInitialX() + ix + 1, getInitialY() + iy );
@@ -47,7 +47,7 @@ void Board::updateScreen() const
 // return true if the game is over
 bool Board::isGameOver()const
 {
-    for(int i = 0; i < getCols(); i++)
+    for(int i = 0; i < cols; i++)
     {
         if (logicBoard[i][0] == POS_FILLED)
             return true;
@@ -59,7 +59,7 @@ bool Board::isGameOver()const
 void Board::deleteLine(const int tY)
 {
     for(int j = tY; j > 0 ; j--) {
-        for (int i = 0; i < getCols(); i++) {
+        for (int i = 0; i < cols; i++) {
             logicBoard[i][j] = logicBoard[i][j - 1];
         }
     }
@@ -68,16 +68,16 @@ void Board::deleteLine(const int tY)
 // check if there is full lines that should be deleted
 void Board::deletePossibleLines()
 {
-    for(int j = 0; j < getRows(); j++)
+    for(int j = 0; j < rows; j++)
     {
         int i = 0;
-        while (i < getCols())
+        while (i < cols)
         {
             if(logicBoard[i][j] != POS_FILLED)
                 break;
             i++;
         }
-        if(i == getCols())
+        if(i == cols)
         {
             deleteLine(j);
             clearLine(j);
@@ -88,7 +88,7 @@ void Board::deletePossibleLines()
 
 void Board::clearLine(int line) const
 {
-    for(int i = 0; i < getCols(); i++)
+    for(int i = 0; i < cols; i++)
     {
         gotoxy(getInitialX() + i + 1, line + getInitialY());
         std::cout << ' ';
@@ -99,15 +99,15 @@ void Board::clearLine(int line) const
 // drawing the limits of both player's boards
 void Board::drawBoardLimits() const
 {
-    for(int j = 0; j < getRows() + 1; j++){
+    for(int j = 0; j < rows + 1; j++){
         gotoxy(getInitialX(), getInitialY() + j); //left border
         std::cout << '|' << std::endl;
-        gotoxy(getInitialX() + getCols() + 1, getInitialY() + j); //right border
+        gotoxy(getInitialX() + cols + 1, getInitialY() + j); //right border
         std::cout << '|' << std::endl;
     }
-    for(int i = 0; i < getCols() + 2; i++)
+    for(int i = 0; i < cols + 2; i++)
     {
-        gotoxy(getInitialX() + i, getInitialY() + getRows()); //floor
+        gotoxy(getInitialX() + i, getInitialY() + rows); //floor
         std::cout << '*' << std::endl;
     }
 }
@@ -117,9 +117,6 @@ void Board::resetBoardPosition(int i, int j)
     logicBoard[i][j] = POS_FREE;
 }
 
-const char Board::getTetrominoFigure() {
-    return tetrominoFigure;
-}
 
 void Board::setBoardPosition(int i1,int j1) {
     logicBoard[i1][j1] = POS_FILLED;

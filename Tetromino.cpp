@@ -321,7 +321,7 @@ int Tetromino::getYInitPos(int tPiece, int tRotation)const
 // moves the tetromino down the board return true if the piece is stored
 bool Tetromino::down()
 {
-    if(getOffsetY() < Board::getRows()-1)
+    if(getOffsetY() < Board::rows-1)
     {
         if (!isPossible(0,1,0))
         {

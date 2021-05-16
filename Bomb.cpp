@@ -3,9 +3,9 @@
 //after you decide the location this is actual bombing
 void Bomb::activateBomb()
 {
-    for(int y = 0; y < Board::getRows(); y++)
+    for(int y = 0; y < Board::rows; y++)
     {
-        for(int x = 0; x < Board::getCols(); x++)
+        for(int x = 0; x < Board::cols; x++)
         {
             if(inBombRadius(x, y) && board.getLogicVal(x, y))
             {
@@ -47,11 +47,11 @@ void Bomb::findBestBombPos()
     int blockHit, max = 0, counter = 0;
     int best_X, best_Y;
     int i, j;
-    for(i = 1; i < Board::getRows(); i++)
+    for(i = 1; i < Board::rows; i++)
     {
-        for(j = 0; j < Board::getCols(); j++)
+        for(j = 0; j < Board::cols; j++)
         {
-            if(!board.getLogicVal(i, j) && counter < Board::getCols()) {
+            if(!board.getLogicVal(i, j) && counter < Board::cols) {
                 counter++;
                 blockHit = checkHowManyBombed(i - 1, j);
                 if(checkBombPath(i-1, j))
@@ -64,7 +64,7 @@ void Bomb::findBestBombPos()
                     }
                 }
             }
-            if(counter == Board::getCols()) {
+            if(counter == Board::cols) {
                 setBestX(best_X);
                 setBestY(best_Y);
                 return;
@@ -75,8 +75,8 @@ void Bomb::findBestBombPos()
 
 int Bomb::checkHowManyBombed(int row, int col) const{
     int res = 0;
-    for (int i = 0; i < Board::getRows(); i++) {
-        for (int j = 0; j < Board::getCols(); j++) {
+    for (int i = 0; i < Board::rows; i++) {
+        for (int j = 0; j < Board::cols; j++) {
             if (inBombRadius(i, j))
                 res++;
         }
@@ -170,7 +170,7 @@ void Bomb::clearTetromino()
 
 bool Bomb::down()
 {
-    if(getOffsetY() < Board::getRows()-1)
+    if(getOffsetY() < Board::rows-1)
     {
         if(!board.isFreeBlock(xOffset, yOffset+1) && !activated)
         {

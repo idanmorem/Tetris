@@ -19,9 +19,8 @@ private:
     char arrowKeys[KEYS_SIZE];
 public:
     int lineCounter(int row);
-    int getLogicVal(int row,int col) { return logicBoard[row][col]; }
+    int getLogicVal(int row,int col) const { return logicBoard[row][col]; }
     void setEmpty();
-    static const char getTetrominoFigure();
     void setArrowKeys(char keys[KEYS_SIZE+1]);
     int getDirection(char key)const;
     bool isGameOver()const;
@@ -34,8 +33,6 @@ public:
     void setInitialX(int initial) {initialX = initial;}
     int getInitialY() const {return initialY;}
     void drawBoardLimits() const;
-    static const int getCols() {return cols;}
-    static const int getRows() {return rows;}
     void resetBoardPosition(int i, int j);
     void setBoardPosition(int i1,int j1);
 };
