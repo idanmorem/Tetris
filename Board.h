@@ -35,5 +35,7 @@ public:
     void drawBoardLimits() const;
     void resetBoardPosition(int i, int j);
     void setBoardPosition(int i1,int j1);
+    bool isAboveFree(int x,int y,int right_offset);
+    int getFirstFreeX(int i);
 };
 #endif //TETRIS_BOARD_H

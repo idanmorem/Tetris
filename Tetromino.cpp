@@ -323,7 +323,7 @@ bool Tetromino::down()
 {
     if(getOffsetY() < Board::rows-1)
     {
-        if (!isPossible(0,1,0))
+        if (!isPossible(xOffset,yOffset + 1,getBlockType(), getBlockRotation()))
         {
             storePiece(getOffsetX(), getOffsetY(), getBlockType(), getBlockRotation());
             return true; // if stored
@@ -365,7 +365,7 @@ void Tetromino::move(int dir)
 void Tetromino::moveLeftRight(int newOffset) {
     if (getLeftmostX() > (board.getInitialX())) {
         if(getRightmostX() < (board.getInitialX() + Board::cols)) {
-            if (isPossible(newOffset, 0, 0)) {
+            if (isPossible(xOffset + newOffset, yOffset, piece, rotation)) {
                 xOffset += newOffset;
                 clearTetromino();
                 draw();
@@ -375,7 +375,7 @@ void Tetromino::moveLeftRight(int newOffset) {
 }
 
 void Tetromino::rotate(int newOffset) {
-    if(isPossible(0, 0, newOffset)) {
+    if(isPossible(xOffset, yOffset,getBlockType(),  (rotation + newOffset) % ROTATION) ){
         rotation = (rotation + newOffset) % ROTATION;
         clearTetromino();
         draw();
@@ -394,15 +394,15 @@ void Tetromino::init(int kind, int rotate) {
     setRotation(rotate);
 }
 
-bool Tetromino::isPossible(int newXoffset, int newYoffset, int newRotateOffset)const
+bool Tetromino::isPossible(int pivX, int pivY, int pPiece, int pRotation)const
 {
     // This is just to check the 4x4 blocks of a piece with the appropriate area in the board
-    for (int i1 = xOffset + newXoffset, i2 = 0; i1 < xOffset + newXoffset + NUMOFBLOCKS; i1++, i2++)
+    for (int i1 = pivX, i2 = 0; i1 < pivX + NUMOFBLOCKS; i1++, i2++)
     {
-        for (int j1 = yOffset + newYoffset - MATRIX_Y_OFFSET, j2 = 0; j1 < (yOffset + newYoffset - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
+        for (int j1 = pivY - MATRIX_Y_OFFSET, j2 = 0; j1 < (pivY - MATRIX_Y_OFFSET)  + NUMOFBLOCKS ; j1++, j2++)
         {
             if(j1 >= 0)
-                if ((getSquareType(piece, (rotation + newRotateOffset) % ROTATION,j2,i2) != 0)  && !board.isFreeBlock(i1,j1) )
+                if ((getSquareType(piece, pRotation,j2,i2) != 0)  && !board.isFreeBlock(i1,j1) )
                     return false;
             // Check if the piece have collision with a block already stored in the map
         }
@@ -453,33 +453,42 @@ void Tetromino::deletePiece(int pivX, int pivY, int pPiece, int pRotation)
 // find the best final position of the specific Tetromino in his board ( the final position that gaines the biggest score value )
 void Tetromino::FindBestPos()
 {
-    int line_before = 0,line_after = 0,added = 0, max_added = 0;
     for(int y=Board::rows-1; y >= 1 ;y--)
     {
-        for (int x = 0; x < Board::cols; x++)             // run over Board columns
+        for (int x = 0; x < Board::cols; x++)
         {
-            for (int r = 0; r < ROTATION; r++)// check all the possible rotations
+            for (int r = 0; r < ROTATION; r++)
             {
-                //TODO:check with snir for OK
-                if (isPossible(0, 0, 0)) {
-                    line_before = board.lineCounter(y);
+                if (isPossible(x, y, piece, r) && board.isAboveFree(x,y,getWidth(r)) ) /// if it's possible rotation in the specific given x,y coordinate
+                {
                     storePiece(x, y, piece, r);
-                    if (board.lineCounter(y) == 12 || board.lineCounter(y - 1) == 12) {
+                    if (board.lineCounter(y) == Board::cols || board.lineCounter(y - 1) == Board::cols) {
+                        board.deletePossibleLines();
                         best_x = x;
                         best_r = r;
                         deletePiece(x, y, piece, r);
                         return;
-                    } else
+                    }
+                    deletePiece(x, y, piece, r);
+                }
+            }
+        }
+        for (int x = 0; x < Board::cols; x++)
+        {
+            for (int r = 0; r < ROTATION; r++)
+            {
+                if (isPossible(x, y, piece, r))
+                {
+                    int first_x_free = board.getFirstFreeX(y);
+                    if (first_x_free != -1)
                     {
-                        line_after = board.lineCounter(y);
-                        added = line_after - line_before;
-                        if (max_added < added)
-                        {
-                            max_added = added;
-                            best_x = x;
+                        if ((first_x_free + getWidth(r) < Board::cols) && isPossible(first_x_free, y, piece, r) && board.isAboveFree(x,y,getWidth(r))) {
+                            best_x = first_x_free;
                             best_r = r;
+                            return;
                         }
-                        deletePiece(x, y, piece, r);
+                        else
+                            best_x = 0;
                     }
                 }
             }
@@ -515,6 +524,7 @@ void Tetromino::moveWiseStep()
         }
     }
     else if (xOffset == best_x && rotation == best_r) {
+
         dropIt();
         init(TheGame::random(PIECES_KINDS), TheGame::random(ROTATION));
         draw();// drop Tetromino
@@ -540,4 +550,25 @@ void Tetromino::moveRandomStep()
         default :
             break;
     }
+}
+
+int Tetromino::getWidth(int r)
+{
+    int max = 0 ;
+    int counter = 0;
+    for(int y = 0 ; y < NUMOFBLOCKS ; y++){
+        counter = 0;
+        for( int x =0 ; x < NUMOFBLOCKS ; x++)
+        {
+            if(mTetrominoes[piece][r][x][y])
+                counter++;
+        }
+        if( counter > max )
+            max = counter ;
+    }
+    return max;
+}
+
+int Tetromino::getBestR() const {
+    return best_r;
 }

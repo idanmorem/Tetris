@@ -15,12 +15,13 @@
 class Tetromino{
     int piece = 0, rotation = 0;
     int currX[NUMOFBLOCKS] = {}, currY[NUMOFBLOCKS] = {}; // saving the (x,y) of every new block piece (4 overall)
-    int best_x = 0, best_r = 0;
 protected:
     const int numBoard;
     char figure;
     Board &board;
     int xOffset = 4, yOffset = 0;
+    int best_x = 0, best_r = 0;
+
 public:
     Tetromino(int numBoard, char figure, Board& board) : numBoard(numBoard), figure(figure), board(board) {}
     virtual void draw();
@@ -46,11 +47,14 @@ public:
     void rotate(int newOffset);
     virtual void dropIt();
     void init(int kind, int rotation);
-    bool isPossible(int newXoffset, int newYoffset, int newRotateOffset)const;
+    bool isPossible(int pivX, int pivY, int pPiece, int pRotation)const;
     void storePiece(int pivX, int pivY, int pPiece, int pRotation);
     void FindBestPos();
     void deletePiece(int pivX, int pivY, int pPiece, int pRotation);
-    void moveWiseStep();
+    virtual void moveWiseStep();
     void moveRandomStep();
+    int getWidth(int r);
+    int getBestR() const;
+
 };
 #endif //TETRIS_TETROMINO_H

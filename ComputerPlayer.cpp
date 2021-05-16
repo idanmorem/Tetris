@@ -32,15 +32,23 @@ int ComputerPlayer::makeTurn() {
             return -1;
         }
     }
-    if (t.getOffsetX() == 4 && t.getOffsetY() == 0){         // if Tetromino is at his starting position
-        setWise(isWiseMove());                         // check if the next move is wiseMove
-        if(wise)                                            // if it wise move, find(and set) the best position and rotation for the Tetromino
-            t.FindBestPos();
+    if(bombInHand)
+    {
+        b.findBestBombPos();
+        b.setRotation(t.getBestR());
+        b.moveWiseStep();
     }
-    if (wise)
-        t.moveWiseStep();
-    else
-        t.moveRandomStep();
+    else {
+        if (t.getOffsetX() == 4 && t.getOffsetY() == 0) {         // if Tetromino is at his starting position
+            setWise(isWiseMove());                         // check if the next move is wiseMove
+            if (wise)                                            // if it wise move, find(and set) the best position and rotation for the Tetromino
+                t.FindBestPos();
+        }
+        if (wise)
+            t.moveWiseStep();
+        else
+            t.moveRandomStep();
+    }
 
     return 0;
 }

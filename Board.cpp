@@ -133,3 +133,25 @@ int Board::lineCounter(int row)
     }
     return counter;
 }
+
+bool Board::isAboveFree(int x,int y,int right_offset)
+{
+    int line,i;
+    for( line = y - 1;  line >= 1 ; line-- )
+    {
+        for( i = x ; i <( x + right_offset) && i < cols ; i++ ){
+            if(logicBoard[i][line] == POS_FILLED)
+                return false;
+        }
+    }
+    return true;
+}
+
+int Board::getFirstFreeX(int y) {
+    for(int i = 0 ; i < cols ; i++)
+    {
+        if(logicBoard[i][y] == POS_FREE)
+            return i;
+    }
+    return -1;
+}
